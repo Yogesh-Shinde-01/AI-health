@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc *)",
+      "Bash(npm run *)",
+      "Bash(Get-ChildItem \"D:\\\\New folder\\\\AI Health Assistant\\\\frontend\\\\src\" -Recurse -File)",
+      "Bash(Sort-Object LastWriteTime -Descending)",
+      "Bash(Select-Object -First 20)",
+      "Bash(Format-Table Name, LastWriteTime, Directory)",
+      "Bash(find \"D:\\\\\\\\New folder\\\\\\\\AI Health Assistant\\\\\\\\frontend\\\\\\\\src\\\\\\\\utils\" -type f -name \"*.ts\" -o -name \"*.tsx\")",
+      "Bash(find \"D:\\\\\\\\New folder\\\\\\\\AI Health Assistant\\\\\\\\frontend\\\\\\\\src\\\\\\\\pages\\\\\\\\doctor\" -name \"*.tsx\")",
+      "Bash(grep *)",
+      "Bash(findstr /r /s \"PORT\" backend\\\\.env backend\\\\config\\\\env.js)",
+      "Bash(node -e \"const s = require\\('./server.js'\\); \")",
+      "Bash(findstr /s \"PORT\\\\|port\\\\|3000\\\\|5000\" server.js)",
+      "Bash(findstr *)",
+      "Bash(dir /a \"D:\\\\New folder\\\\AI Health Assistant\\\\frontend\")",
+      "PowerShell(Get-ChildItem -Path \"D:\\\\New folder\\\\AI Health Assistant\" -Recurse -Depth 4 | Where-Object { !$_.PSIsContainer } | Select-Object FullName | Format-Table -AutoSize)",
+      "PowerShell(Get-ChildItem -Path \"D:\\\\New folder\\\\AI Health Assistant\\\\frontend\\\\src\" -Recurse | Where-Object { !$_.PSIsContainer } | Select-Object FullName)",
+      "Bash(npm install *)",
+      "Bash(node --input-type=module --eval \"import\\('./services/emergencyService.js'\\).then\\(\\(\\) => console.log\\('emergencyService OK'\\)\\).catch\\(e => console.error\\(e.message\\)\\)\")",
+      "Bash(node --input-type=module --eval \"import\\('./services/datasetService.js'\\).then\\(\\(\\) => console.log\\('datasetService OK'\\)\\).catch\\(e => console.error\\(e.message\\)\\)\")",
+      "Bash(node --input-type=module --eval \"import\\('./services/groqService.js'\\).then\\(\\(\\) => console.log\\('groqService OK'\\)\\).catch\\(e => console.error\\(e.message\\)\\)\")",
+      "Bash(node --input-type=module --eval \"import\\('./services/aiOrchestrator.js'\\).then\\(\\(\\) => console.log\\('aiOrchestrator OK'\\)\\).catch\\(e => console.error\\(e.message\\)\\)\")",
+      "Bash(node --input-type=module --eval ' *)"
+    ]
+  }
+}

@@ -1,0 +1,119 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Patient {
+  id               String         @id @default(uuid())
+  fullName         String
+  phone            String         @unique
+  email            String?        @unique
+  password         String
+  age              Int?
+  gender           String?
+  height           Float?
+  weight           Float?
+  bloodGroup       String?
+  dateOfBirth      DateTime?
+  address          String?
+  emergencyContact String?
+  profilePicture   String?
+  language         String?
+  chronicDiseases  String[]
+  allergies        String[]
+  currentMedicines String[]
+  role             String         @default("patient")
+  isVerified       Boolean        @default(false)
+  consultations    Consultation[]
+  prescriptions    Prescription[]
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+}
+
+model Doctor {
+  id                String         @id @default(uuid())
+  fullName          String
+  phone             String         @unique
+  email             String?        @unique
+  password          String
+  specialization    String
+  licenseNumber     String         @unique
+  clinicName        String?
+  clinicAddress     String?
+  yearsOfExperience Int?
+  consultationFee   Float?
+  profilePicture    String?
+  language          String?
+  availability      Boolean        @default(true)
+  rating            Float          @default(0)
+  totalPatients     Int            @default(0)
+  role              String         @default("doctor")
+  isVerified        Boolean        @default(false)
+  consultations     Consultation[]
+  prescriptions     Prescription[]
+  createdAt         DateTime       @default(now())
+  updatedAt         DateTime       @updatedAt
+}
+
+model Consultation {
+  id                     String        @id @default(uuid())
+  patient                Patient       @relation(fields: [patientId], references: [id])
+  patientId              String
+  doctor                 Doctor        @relation(fields: [doctorId], references: [id])
+  doctorId               String
+  symptoms               String
+  questionAnswers        Json          @default("{}")
+  additionalNotes        String?
+  detectedSpecialization String?
+  possibleDisease        String?
+  confidence             String?
+  riskLevel              String?
+  disclaimer             String?
+  status                 String        @default("pending")
+  prescription           Prescription?
+  createdAt              DateTime      @default(now())
+  updatedAt              DateTime      @updatedAt
+}
+
+model Prescription {
+  id             String       @id @default(uuid())
+  consultation   Consultation @relation(fields: [consultationId], references: [id])
+  consultationId String       @unique
+  patient        Patient      @relation(fields: [patientId], references: [id])
+  patientId      String
+  doctor         Doctor       @relation(fields: [doctorId], references: [id])
+  doctorId       String
+  diagnosis      String
+  medicines      Json
+  advice         String?
+  followUpDate   DateTime?
+  status         String       @default("draft")
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
+
+model OTP {
+  id        String   @id @default(uuid())
+  phone     String
+  otp       String
+  purpose   String   @default("login")
+  role      String?
+  expiresAt DateTime
+  isUsed    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([phone, purpose, isUsed])
+}
+
+model LoginLock {
+  id           String   @id @default(uuid())
+  lockKey      String   @unique
+  attempts     Int      @default(0)
+  lockedUntil  DateTime?
+  updatedAt    DateTime @updatedAt
+}

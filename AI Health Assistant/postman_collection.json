@@ -1,0 +1,660 @@
+{
+  "info": {
+    "_postman_id": "ai-health-assistant-api",
+    "name": "AI Health Assistant",
+    "description": "Complete API collection for AI Health Assistant backend. Set collection variables: baseUrl, token. See API_DOCS.md for setup guide.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000/api" },
+    { "key": "token", "value": "" },
+    { "key": "patientId", "value": "" },
+    { "key": "doctorId", "value": "" },
+    { "key": "consultationId", "value": "" },
+    { "key": "prescriptionId", "value": "" }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }]
+  },
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/health"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register Patient",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Ravi Kadam\",\n  \"phone\": \"9876543210\",\n  \"email\": \"ravi@gmail.com\",\n  \"password\": \"Test@1234\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/register/patient"
+          }
+        },
+        {
+          "name": "Register Doctor",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Dr. Sameer Patil\",\n  \"phone\": \"9123456789\",\n  \"email\": \"sameer@gmail.com\",\n  \"password\": \"Test@1234\",\n  \"specialization\": \"Orthopedic\",\n  \"licenseNumber\": \"MH-123456\",\n  \"clinicName\": \"City Care Hospital\",\n  \"clinicAddress\": \"Mumbai, Maharashtra\",\n  \"yearsOfExperience\": 10,\n  \"consultationFee\": 500\n}"
+            },
+            "url": "{{baseUrl}}/auth/register/doctor"
+          }
+        },
+        {
+          "name": "Verify Registration OTP",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"9876543210\",\n  \"otp\": \"123456\",\n  \"role\": \"patient\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/verify-otp"
+          }
+        },
+        {
+          "name": "Login - Email Password OTP",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userRole\": \"patient\",\n  \"login_method\": \"email_password_otp\",\n  \"email\": \"ravi@gmail.com\",\n  \"password\": \"Test@1234\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/login"
+          }
+        },
+        {
+          "name": "Login - Mobile OTP",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userRole\": \"patient\",\n  \"login_method\": \"mobile_otp\",\n  \"mobile\": \"9876543210\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/login"
+          }
+        },
+        {
+          "name": "Verify Login OTP",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"9876543210\",\n  \"otp\": \"123456\",\n  \"role\": \"patient\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/verify-login-otp"
+          }
+        },
+        {
+          "name": "Resend OTP",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"9876543210\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/resend-otp"
+          }
+        },
+        {
+          "name": "Forgot Password",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"ravi@gmail.com\",\n  \"role\": \"patient\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/forgot-password"
+          }
+        },
+        {
+          "name": "Reset Password",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"9876543210\",\n  \"otp\": \"123456\",\n  \"newPassword\": \"NewTest@1234\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/reset-password"
+          }
+        },
+        {
+          "name": "Send OTP (Legacy)",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mobile\": \"9876543210\",\n  \"role\": \"patient\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/send-otp"
+          }
+        },
+        {
+          "name": "Login Verify OTP (Legacy)",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userRole\": \"patient\",\n  \"login_method\": \"email_password_otp\",\n  \"otp\": \"123456\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/login/verify"
+          }
+        },
+        {
+          "name": "Login Resend OTP (Legacy)",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userRole\": \"patient\",\n  \"login_method\": \"email_password_otp\",\n  \"phone\": \"9876543210\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/login/resend-otp"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Patient (Spec)",
+      "item": [
+        {
+          "name": "Get Patient Profile",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/patient/profile"
+          }
+        },
+        {
+          "name": "Update Patient Profile",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Ravi Kadam\",\n  \"age\": 28,\n  \"gender\": \"MALE\",\n  \"height\": 175,\n  \"weight\": 70,\n  \"bloodGroup\": \"B+\",\n  \"email\": \"ravi@gmail.com\"\n}"
+            },
+            "url": "{{baseUrl}}/patient/update-profile"
+          }
+        },
+        {
+          "name": "Upload Patient Picture",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [{ "key": "image", "type": "file", "src": [] }]
+            },
+            "url": "{{baseUrl}}/patient/upload-picture"
+          }
+        },
+        {
+          "name": "Get Patient Consultations",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/patient/consultations"
+          }
+        },
+        {
+          "name": "Get Patient Prescriptions",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/patient/prescriptions"
+          }
+        },
+        {
+          "name": "Get Medical History",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/patient/medical-history"
+          }
+        },
+        {
+          "name": "Update Medical History",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"chronicDiseases\": [\"Diabetes\"],\n  \"allergies\": [\"Penicillin\"],\n  \"currentMedicines\": [\"Metformin\"]\n}"
+            },
+            "url": "{{baseUrl}}/patient/medical-history"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Doctor (Spec)",
+      "item": [
+        {
+          "name": "Get Doctor Profile",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/doctor/profile"
+          }
+        },
+        {
+          "name": "Update Doctor Profile",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Dr. Sameer Patil\",\n  \"phone\": \"9123456789\",\n  \"email\": \"sameer@gmail.com\",\n  \"specialization\": \"Orthopedic\",\n  \"clinicName\": \"City Care Hospital\",\n  \"consultationFee\": 500\n}"
+            },
+            "url": "{{baseUrl}}/doctor/update-profile"
+          }
+        },
+        {
+          "name": "Upload Doctor Picture",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [{ "key": "image", "type": "file", "src": [] }]
+            },
+            "url": "{{baseUrl}}/doctor/upload-picture"
+          }
+        },
+        {
+          "name": "Toggle Availability",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"availability\": true\n}"
+            },
+            "url": "{{baseUrl}}/doctor/availability"
+          }
+        },
+        {
+          "name": "Get Doctor Patients",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/doctor/patients"
+          }
+        },
+        {
+          "name": "Get Doctor Consultations",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/doctor/consultations"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Public",
+      "auth": { "type": "noauth" },
+      "item": [
+        {
+          "name": "List Doctors by Specialization",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "GET",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": {
+              "raw": "{{baseUrl}}/doctors?specialization=Orthopedic",
+              "host": ["{{baseUrl}}"],
+              "path": ["doctors"],
+              "query": [{ "key": "specialization", "value": "Orthopedic" }]
+            }
+          }
+        },
+        {
+          "name": "List Doctors (doctor/list)",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "GET",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": {
+              "raw": "{{baseUrl}}/doctor/list?specialization=Orthopedic",
+              "host": ["{{baseUrl}}"],
+              "path": ["doctor", "list"],
+              "query": [{ "key": "specialization", "value": "Orthopedic" }]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Consultation (Spec)",
+      "item": [
+        {
+          "name": "Submit Consultation",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"doctorId\": \"{{doctorId}}\",\n  \"symptoms\": \"Fever, headache for 2 days\",\n  \"questionAnswers\": { \"duration\": \"2 days\" },\n  \"additionalNotes\": \"No travel\",\n  \"riskLevel\": \"moderate\"\n}"
+            },
+            "url": "{{baseUrl}}/consultation/submit"
+          }
+        },
+        {
+          "name": "Get Consultation By ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/consultation/{{consultationId}}"
+          }
+        },
+        {
+          "name": "Update Consultation Status",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"reviewed\"\n}"
+            },
+            "url": "{{baseUrl}}/consultation/{{consultationId}}/status"
+          }
+        },
+        {
+          "name": "Get Patient Consultation History",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/consultation/patient/{{patientId}}"
+          }
+        },
+        {
+          "name": "Get Doctor Consultation History",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/consultation/doctor/{{doctorId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Prescription (Spec)",
+      "item": [
+        {
+          "name": "Create Prescription",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"consultationId\": \"{{consultationId}}\",\n  \"patientId\": \"{{patientId}}\",\n  \"diagnosis\": \"Viral fever\",\n  \"medicines\": [\n    {\n      \"name\": \"Paracetamol\",\n      \"dosage\": \"500mg\",\n      \"frequency\": \"Twice daily\",\n      \"duration\": \"5 days\"\n    }\n  ],\n  \"advice\": \"Rest and fluids\"\n}"
+            },
+            "url": "{{baseUrl}}/prescription/create"
+          }
+        },
+        {
+          "name": "Approve Prescription",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{}" },
+            "url": "{{baseUrl}}/prescription/{{prescriptionId}}/approve"
+          }
+        },
+        {
+          "name": "Get Prescription By ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/prescription/{{prescriptionId}}"
+          }
+        },
+        {
+          "name": "Get Patient Prescription History",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/prescription/patient/{{patientId}}"
+          }
+        },
+        {
+          "name": "Get Prescription By Consultation",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/prescription/consultation/{{consultationId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Legacy (Frontend Paths)",
+      "item": [
+        {
+          "name": "GET Patient Me",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/patients/me"
+          }
+        },
+        {
+          "name": "PUT Patient Me",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Ravi Kadam\",\n  \"age\": 28,\n  \"gender\": \"MALE\",\n  \"heightCm\": 175,\n  \"weightKg\": 70\n}"
+            },
+            "url": "{{baseUrl}}/patients/me"
+          }
+        },
+        {
+          "name": "GET Medical History (Legacy)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/patients/me/medical-history"
+          }
+        },
+        {
+          "name": "PUT Medical History (Legacy)",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"chronicDiseases\": [],\n  \"allergies\": [],\n  \"currentMedicines\": []\n}"
+            },
+            "url": "{{baseUrl}}/patients/me/medical-history"
+          }
+        },
+        {
+          "name": "PATCH Doctor Update Profile (Legacy)",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Dr. Sameer Patil\",\n  \"mobile\": \"9123456789\",\n  \"email\": \"sameer@gmail.com\",\n  \"specialization\": \"Orthopedic\",\n  \"hospital\": \"City Care Hospital\",\n  \"consultationFee\": \"500\"\n}"
+            },
+            "url": "{{baseUrl}}/doctor/update-profile"
+          }
+        },
+        {
+          "name": "POST Consultations (Legacy)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"doctorId\": \"{{doctorId}}\",\n  \"symptoms\": \"Fever and cough\",\n  \"aiAnswers\": {},\n  \"additionalNotes\": \"\",\n  \"riskLevel\": \"low\"\n}"
+            },
+            "url": "{{baseUrl}}/consultations"
+          }
+        },
+        {
+          "name": "GET Consultations (Legacy)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/consultations"
+          }
+        },
+        {
+          "name": "GET Pending Consultations",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/consultations/pending"
+          }
+        },
+        {
+          "name": "GET Doctor Consultations (Legacy)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/consultations/doctor"
+          }
+        },
+        {
+          "name": "GET Consultation By ID (Legacy)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/consultations/{{consultationId}}"
+          }
+        },
+        {
+          "name": "PATCH Consultation Status (Legacy)",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"reviewed\"\n}"
+            },
+            "url": "{{baseUrl}}/consultations/{{consultationId}}/status"
+          }
+        },
+        {
+          "name": "GET Prescriptions (Legacy)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/prescriptions"
+          }
+        },
+        {
+          "name": "GET Prescription By ID (Legacy)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/prescriptions/{{prescriptionId}}"
+          }
+        },
+        {
+          "name": "POST Prescriptions (Legacy)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"consultationId\": \"{{consultationId}}\",\n  \"patientId\": \"{{patientId}}\",\n  \"diagnosis\": \"Viral fever\",\n  \"medicines\": [],\n  \"advice\": \"Rest\"\n}"
+            },
+            "url": "{{baseUrl}}/prescriptions"
+          }
+        },
+        {
+          "name": "PATCH Prescription (Legacy)",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"diagnosis\": \"Updated diagnosis\",\n  \"medicines\": []\n}"
+            },
+            "url": "{{baseUrl}}/prescriptions/{{prescriptionId}}"
+          }
+        },
+        {
+          "name": "PATCH Approve Prescription (Legacy)",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{}" },
+            "url": "{{baseUrl}}/prescriptions/{{prescriptionId}}/approve"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Follow-Ups (Not Mounted)",
+      "description": "Routes exist in followUpRoutes.js but are not registered in server.js yet.",
+      "item": [
+        {
+          "name": "Book Follow-Up",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"doctorId\": \"{{doctorId}}\",\n  \"scheduledAt\": \"2026-05-25T10:00:00.000Z\",\n  \"notes\": \"Follow-up visit\"\n}"
+            },
+            "url": "{{baseUrl}}/follow-ups"
+          }
+        },
+        {
+          "name": "Get My Follow-Ups",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/follow-ups/me"
+          }
+        }
+      ]
+    }
+  ]
+}

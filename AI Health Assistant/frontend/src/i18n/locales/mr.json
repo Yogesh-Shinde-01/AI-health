@@ -1,0 +1,273 @@
+{
+  "language": {
+    "title": "तुमची भाषा निवडा",
+    "continue": "पुढे चला",
+    "support": "मदत हवी आहे? सहाय्याशी संपर्क साधा."
+  },
+  "welcome": {
+    "title": "AI Health Assistant",
+    "tagline": "तुमचा वैयक्तिक आरोग्य साथीदार",
+    "getStarted": "सुरू करा",
+    "iAmDoctor": "मी डॉक्टर आहे",
+    "terms": "वापर अटी",
+    "privacy": "गोपनीयता धोरण",
+    "features": {
+      "ai": "AI लक्षण विश्लेषण",
+      "voice": "आवाज आणि मजकूर समर्थन",
+      "doctor": "डॉक्टर पुनरावलोकन",
+      "secure": "सुरक्षित आणि विश्वासार्ह"
+    }
+  },
+  "login": {
+    "title": "पुन्हा स्वागत आहे!",
+    "subtitle": "पुढे जाण्यासाठी लॉगिन करा",
+    "createTitle": "खाते तयार करा",
+    "createSubtitle": "पुढे जाण्यासाठी नोंदणी करा",
+    "mobilePlaceholder": "मोबाईल नंबर",
+    "sendOtp": "OTP पाठवा",
+    "continueWith": "किंवा पुढे चालू ठेवा",
+    "google": "Google ने पुढे जा",
+    "apple": "Apple ने पुढे जा",
+    "newUser": "नवीन वापरकर्ता?",
+    "registerNow": "आता नोंदणी करा",
+    "existingUser": "आधीच खाते आहे?",
+    "loginNow": "लॉगिन करा",
+    "invalidMobile": "वैध 10 अंकी मोबाईल नंबर टाका",
+    "otpSent": "OTP यशस्वीरित्या पाठवला",
+    "socialSoon": "सोशल लॉगिन लवकरच उपलब्ध होईल"
+  },
+  "otp": {
+    "title": "OTP टाका",
+    "subtitle": "आम्ही 6 अंकी OTP पाठवला आहे",
+    "resend": "OTP पुन्हा पाठवा",
+    "resendIn": "{{seconds}}s मध्ये OTP पुन्हा पाठवा",
+    "next": "पुढे",
+    "invalid": "वैध 6 अंकी OTP टाका"
+  },
+  "profile": {
+    "title": "तुमची प्रोफाइल पूर्ण करा",
+    "fullName": "पूर्ण नाव",
+    "age": "वय",
+    "gender": "लिंग",
+    "height": "उंची (सेमी)",
+    "weight": "वजन (कि.ग्रॅ.)",
+    "male": "पुरुष",
+    "female": "महिला",
+    "other": "इतर",
+    "next": "पुढे"
+  },
+  "medicalHistory": {
+    "title": "वैद्यकीय इतिहास",
+    "subtitle": "तुमच्या आरोग्याबद्दल अधिक माहिती द्या",
+    "chronicDisease": "तुम्हाला काही जुना आजार आहे का?",
+    "allergies": "काही अॅलर्जी आहेत का?",
+    "currentMedicines": "सध्या घेत असलेली औषधे",
+    "allergyPlaceholder": "अॅलर्जी तपशील टाका",
+    "currentMedicinePlaceholder": "औषधे स्वल्पविरामाने टाका",
+    "diseases": {
+      "none": "नाही",
+      "diabetes": "मधुमेह",
+      "bp": "बीपी",
+      "thyroid": "थायरॉईड",
+      "asthma": "दमा",
+      "heart": "हृदयविकार",
+      "other": "इतर"
+    }
+  },
+  "home": {
+    "greeting": "नमस्कार, {{name}}",
+    "subtitle": "आज मी तुम्हाला कशी मदत करू?",
+    "describeSymptoms": "तुमची लक्षणे सांगा",
+    "tapHint": "बोला किंवा टाइप करा",
+    "history": "माझा इतिहास",
+    "prescriptions": "प्रिस्क्रिप्शन",
+    "findDoctor": "डॉक्टर शोधा",
+    "healthTips": "आरोग्य टिप्स",
+    "emergency": "आपत्कालीन मदत",
+    "emergencyAlert": "आपत्कालीन मदत लवकरच उपलब्ध होईल."
+  },
+  "symptoms": {
+    "title": "तुमची लक्षणे सांगा",
+    "typePlaceholder": "तुमची लक्षणे येथे टाइप करा किंवा बोला...",
+    "chars": "{{count}} / {{max}} वर्ण"
+  },
+  "aiQuestions": {
+    "title": "AI प्रश्न विचारत आहे",
+    "mock": {
+      "fever": {
+        "question": "तुम्हाला ताप आहे का?",
+        "options": ["हो, मला ताप आहे", "नाही, मला ताप नाही", "निश्चित नाही"]
+      },
+      "temperature": {
+        "question": "तुमच्या शरीराचे तापमान किती आहे?",
+        "options": ["सामान्य (98°F खाली)", "कमी (97°F खाली)", "मध्यम (99°F–100°F)", "जास्त (101°F–103°F)", "खूप जास्त (103°F पेक्षा अधिक)"]
+      },
+      "duration": {
+        "question": "तुम्हाला ताप किती दिवस झाला आहे?",
+        "options": ["आज", "1 – 2 दिवस", "3 – 5 दिवस", "5 दिवसांपेक्षा जास्त"]
+      }
+    }
+  },
+  "moreQuestions": {
+    "title": "आणखी प्रश्न",
+    "tapToSpeak": "बोलण्यासाठी टॅप करा",
+    "chillsQuestion": "तुम्हाला थंडी किंवा शिरशिरी येते का?"
+  },
+  "additionalNotes": {
+    "title": "अतिरिक्त नोंदी",
+    "subtitle": "तुम्हाला आणखी काही तपशील सामायिक करायचे आहेत का?",
+    "typePlaceholder": "इतर लक्षणे, अ‍ॅलर्जी, अलीकडील प्रवास, वैद्यकीय स्थिती इ.",
+    "tapSpeakOrType": "बोला किंवा टाइप करा"
+  },
+  "summary": {
+    "title": "सारांश आणि धोका",
+    "cardTitle": "AI लक्षण सारांश",
+    "yourSymptoms": "तुमची लक्षणे",
+    "doctorReview": "डॉक्टर पुनरावलोकनाची शिफारस केली जाते.",
+    "disclaimer": "हे निदान नाही. कृपया डॉक्टरांचा सल्ला घ्या.",
+    "submitToDoctor": "डॉक्टरांकडे पाठवा →",
+    "mockSymptoms": ["ताप (2 दिवस)", "अंगदुखी", "डोकेदुखी", "शिरशिरी", "खोकला नाही"],
+    "labels": {
+      "fever": "ताप",
+      "temperature": "शरीराचे तापमान",
+      "feverDuration": "ताप कालावधी",
+      "chills": "थंडी / शिरशिरी",
+      "voiceNotes": "आवाज नोंदी (आणखी प्रश्न)",
+      "additionalNotes": "अतिरिक्त नोंदी"
+    }
+  },
+  "doctorDashboard": {
+    "title": "डॉक्टर डॅशबोर्ड",
+    "all": "सर्व",
+    "pending": "प्रलंबित",
+    "reviewed": "पुनरावलोकित",
+    "noConsultations": "अजून कोणतीही सल्लामसलत नाही",
+    "view": "पहा"
+  },
+  "doctorConsultation": {
+    "title": "रुग्ण सारांश",
+    "symptomsSummary": "लक्षण सारांश",
+    "medicalHistory": "वैद्यकीय इतिहास",
+    "aiAssessment": "AI मूल्यांकन",
+    "possibleCause": "संभाव्य कारण",
+    "suggestedTests": "सुचवलेली तपासणी",
+    "needMoreInfo": "अधिक माहिती हवी",
+    "createRx": "Rx तयार करा",
+    "messagePatient": "रुग्णाला संदेश",
+    "sendMessage": "संदेश पाठवा"
+  },
+  "createPrescription": {
+    "title": "प्रिस्क्रिप्शन तयार करा",
+    "diagnosis": "निदान / प्राथमिक मत",
+    "medicines": "औषधे",
+    "addMedicine": "औषध जोडा",
+    "orsAdvice": "ORS / सल्ला",
+    "dateTime": "दिनांक आणि वेळ",
+    "saveDraft": "मसुदा जतन करा"
+  },
+  "editPrescription": {
+    "title": "प्रिस्क्रिप्शन संपादित करा",
+    "approve": "मंजूर करा"
+  },
+  "prescriptionApproved": {
+    "title": "प्रिस्क्रिप्शन मंजूर",
+    "subtitle": "प्रिस्क्रिप्शन मंजूर झाले आहे आणि रुग्णाला पाठवले गेले आहे.",
+    "viewPrescription": "प्रिस्क्रिप्शन पहा",
+    "findPharmacy": "जवळची फार्मसी शोधा",
+    "backToDashboard": "डॅशबोर्डवर परत जा"
+  },
+  "patientPrescription": {
+    "title": "माझे प्रिस्क्रिप्शन",
+    "diagnosis": "निदान",
+    "medicines": "औषधे",
+    "advice": "सल्ला",
+    "findPharmacy": "जवळची फार्मसी शोधा",
+    "signature": "डॉक्टर सही"
+  },
+  "pdfShare": {
+    "title": "प्रिस्क्रिप्शन अहवाल",
+    "downloadPdf": "PDF डाउनलोड करा",
+    "share": "शेअर करा",
+    "shareSuccess": "लिंक कॉपी झाली"
+  },
+  "followUp": {
+    "title": "फॉलो-अप बुक करा",
+    "selectDoctor": "डॉक्टर निवडा",
+    "notes": "नोट्स",
+    "notesPlaceholder": "पर्यायी नोट्स जोडा",
+    "confirm": "फॉलो-अप निश्चित करा",
+    "morning": "सकाळ (9–12)",
+    "afternoon": "दुपार (12–5)",
+    "evening": "संध्याकाळ (5–8)",
+    "booked": "फॉलो-अप यशस्वीरित्या बुक झाला"
+  },
+  "history": {
+    "title": "माझा इतिहास",
+    "consultations": "सल्लामसलत",
+    "prescriptions": "प्रिस्क्रिप्शन",
+    "noConsultations": "कोणतीही सल्लामसलत आढळली नाही",
+    "noPrescriptions": "कोणतेही प्रिस्क्रिप्शन आढळले नाही",
+    "bookFollowUp": "फॉलो-अप बुक करा"
+  },
+  "bottomNav": {
+    "home": "होम",
+    "dashboard": "डॅशबोर्ड",
+    "history": "इतिहास",
+    "prescription": "प्रिस्क्रिप्शन",
+    "profile": "प्रोफाइल"
+  },
+  "toast": {
+    "savedDraft": "मसुदा यशस्वीरित्या जतन झाला",
+    "prescriptionApproved": "प्रिस्क्रिप्शन मंजूर झाले",
+    "profileUpdated": "प्रोफाइल अपडेट झाली",
+    "historyUpdated": "वैद्यकीय इतिहास अपडेट झाला"
+  },
+  "mock": {
+    "causes": {
+      "general": "सामान्य व्हायरल आजार",
+      "viralFever": "संभाव्य व्हायरल ताप",
+      "coldCough": "सामान्य सर्दी आणि खोकला",
+      "digestive": "संभाव्य पचन त्रास"
+    },
+    "tests": {
+      "cbc": "CBC चाचणी",
+      "ecg": "ECG तपासणी",
+      "physician": "त्वरित डॉक्टर सल्ला",
+      "rest": "विश्रांती आणि पाणी",
+      "temperature": "तापमान तपासा",
+      "hydration": "अधिक द्रव घ्या"
+    }
+  },
+  "forms": {
+    "voiceInput": "आवाज इनपुट",
+    "typeInput": "टाइप इनपुट",
+    "startListening": "बोलण्यासाठी टॅप करा",
+    "stopListening": "ऐकणे थांबवा",
+    "transcriptPlaceholder": "तुमचा आवाज इथे दिसेल...",
+    "typePlaceholder": "तुमची लक्षणे इथे लिहा",
+    "notesPlaceholder": "अधिक माहिती लिहा",
+    "medicineName": "औषधाचे नाव",
+    "dosage": "डोस",
+    "frequency": "वारंवारता",
+    "duration": "कालावधी",
+    "remove": "काढा"
+  },
+  "common": {
+    "next": "पुढे",
+    "back": "मागे",
+    "skip": "वगळा",
+    "submit": "सबमिट",
+    "loading": "लोड होत आहे...",
+    "yes": "हो",
+    "no": "नाही",
+    "notSure": "निश्चित नाही",
+    "view": "पहा",
+    "download": "डाउनलोड",
+    "share": "शेअर",
+    "save": "जतन करा",
+    "cancel": "रद्द करा",
+    "or": "किंवा",
+    "unknown": "अज्ञात",
+    "loadError": "डेटा लोड करता आला नाही. कृपया पुन्हा प्रयत्न करा."
+  }
+}

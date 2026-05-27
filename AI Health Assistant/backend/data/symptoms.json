@@ -1,0 +1,322 @@
+[
+  {
+    "id": 1,
+    "keywords": ["fever", "temperature", "hot", "burning"],
+    "bodySystem": "General",
+    "disease": "Viral Fever",
+    "specialization": "General Physician",
+    "riskLevel": "Low",
+    "confidence": 82,
+    "questions": [
+      { "question": "How long have you had this fever?", "options": ["Just today", "1–2 days", "3–5 days", "More than 5 days"] },
+      { "question": "How high is the temperature?", "options": ["Normal (98–99°F)", "Mild (99–100°F)", "High (100–102°F)", "Very high (>102°F)"] },
+      { "question": "Do you have chills or shivering?", "options": ["Yes, severe", "Mild chills", "No", "Not sure"] },
+      { "question": "Are you experiencing body aches?", "options": ["Yes, severe", "Mild", "No"] }
+    ],
+    "advice": "Rest, stay hydrated. See a doctor if fever lasts more than 3 days or exceeds 103°F."
+  },
+  {
+    "id": 2,
+    "keywords": ["cough", "cold", "runny nose", "sneezing", "sore throat"],
+    "bodySystem": "Respiratory",
+    "disease": "Common Cold / Upper Respiratory Infection",
+    "specialization": "General Physician",
+    "riskLevel": "Low",
+    "confidence": 85,
+    "questions": [
+      { "question": "How long have you had these symptoms?", "options": ["Today", "2–3 days", "4–7 days", "More than a week"] },
+      { "question": "Do you have a sore throat?", "options": ["Yes, severe", "Mild", "No"] },
+      { "question": "Are you experiencing difficulty breathing?", "options": ["Yes, significant", "Slightly short of breath", "No"] },
+      { "question": "Do you have a fever along with the cough?", "options": ["Yes", "No", "Mild low-grade fever"] }
+    ],
+    "advice": "Rest, drink warm fluids, use steam inhalation. See a doctor if breathing becomes difficult."
+  },
+  {
+    "id": 3,
+    "keywords": ["headache", "head pain", "migraine", "head throbbing"],
+    "bodySystem": "Neurological",
+    "disease": "Headache / Migraine",
+    "specialization": "Neurologist",
+    "riskLevel": "Low",
+    "confidence": 80,
+    "questions": [
+      { "question": "Where is the headache located?", "options": ["Forehead", "One side of head", "Back of head", "Entire head"] },
+      { "question": "How severe is the pain (1–10)?", "options": ["Mild (1–3)", "Moderate (4–6)", "Severe (7–9)", "Unbearable (10)"] },
+      { "question": "Is the headache accompanied by nausea or vomiting?", "options": ["Yes", "No", "Only nausea"] },
+      { "question": "Does light or noise worsen the headache?", "options": ["Yes, both", "Only light", "Only noise", "No"] }
+    ],
+    "advice": "Rest in a dark, quiet room. Drink water. Seek urgent care if headache is sudden, severe, or the worst of your life."
+  },
+  {
+    "id": 4,
+    "keywords": ["stomach pain", "abdominal pain", "belly pain", "stomach ache", "stomach cramps"],
+    "bodySystem": "Digestive",
+    "disease": "Gastroenteritis / Abdominal Pain",
+    "specialization": "Gastroenterologist",
+    "riskLevel": "Medium",
+    "confidence": 78,
+    "questions": [
+      { "question": "Where exactly is the pain?", "options": ["Upper abdomen", "Lower abdomen", "Right side", "Left side", "All over"] },
+      { "question": "Do you have nausea or vomiting?", "options": ["Yes, both", "Only nausea", "Only vomiting", "No"] },
+      { "question": "Do you have diarrhea or loose stools?", "options": ["Yes, frequent", "Occasional", "No"] },
+      { "question": "When did the pain start?", "options": ["After eating", "Before meals", "No relation to food", "Sudden onset"] }
+    ],
+    "advice": "Stay hydrated with ORS. Avoid solid food initially. See a doctor if pain is severe or blood appears in stools."
+  },
+  {
+    "id": 5,
+    "keywords": ["chest pain", "chest tightness", "heart pain", "chest pressure"],
+    "bodySystem": "Cardiovascular",
+    "disease": "Chest Pain — Cardiac Evaluation Needed",
+    "specialization": "Cardiologist",
+    "riskLevel": "High",
+    "confidence": 90,
+    "questions": [
+      { "question": "How does the chest pain feel?", "options": ["Crushing/pressure", "Sharp/stabbing", "Burning", "Tight/squeezing"] },
+      { "question": "Does the pain spread to arm, jaw, or shoulder?", "options": ["Yes, left arm", "Yes, jaw", "Yes, shoulder", "No"] },
+      { "question": "Are you short of breath?", "options": ["Yes, severely", "Mildly", "No"] },
+      { "question": "Do you sweat or feel dizzy along with the pain?", "options": ["Yes", "Only sweating", "Only dizziness", "No"] }
+    ],
+    "advice": "Chest pain can be serious. Call emergency services (112) immediately if pain is severe or spreading."
+  },
+  {
+    "id": 6,
+    "keywords": ["back pain", "lower back pain", "back ache", "spine pain"],
+    "bodySystem": "Musculoskeletal",
+    "disease": "Back Pain / Musculoskeletal",
+    "specialization": "Orthopedic",
+    "riskLevel": "Low",
+    "confidence": 80,
+    "questions": [
+      { "question": "Where is the back pain located?", "options": ["Lower back", "Upper back", "Middle back", "Entire spine"] },
+      { "question": "Did the pain start after lifting or injury?", "options": ["Yes, after lifting", "Yes, after injury", "No clear cause", "After prolonged sitting"] },
+      { "question": "Does the pain radiate to legs?", "options": ["Yes, both legs", "Yes, one leg", "No"] },
+      { "question": "How long have you had this pain?", "options": ["Today", "2–7 days", "1–4 weeks", "More than a month"] }
+    ],
+    "advice": "Rest, apply warm compress. See a physiotherapist. Seek immediate care if you have leg weakness or bladder issues."
+  },
+  {
+    "id": 7,
+    "keywords": ["skin rash", "rash", "itching", "skin irritation", "hives", "urticaria"],
+    "bodySystem": "Dermatological",
+    "disease": "Skin Rash / Allergic Reaction",
+    "specialization": "Dermatologist",
+    "riskLevel": "Low",
+    "confidence": 82,
+    "questions": [
+      { "question": "Where is the rash located?", "options": ["Face", "Arms/hands", "Trunk/abdomen", "Legs/feet", "All over body"] },
+      { "question": "Is the rash itchy?", "options": ["Very itchy", "Mildly itchy", "Not itchy", "Burning sensation"] },
+      { "question": "Did the rash appear after eating something or touching a substance?", "options": ["Yes, after eating", "Yes, after contact", "No known trigger", "After medication"] },
+      { "question": "Is there swelling around the rash or on face/lips?", "options": ["Yes, significant swelling", "Mild redness", "No swelling"] }
+    ],
+    "advice": "Avoid known allergens. Antihistamines may help. Seek emergency care if swelling affects face/throat or breathing."
+  },
+  {
+    "id": 8,
+    "keywords": ["eye pain", "red eye", "eye discharge", "conjunctivitis", "pink eye", "eye irritation"],
+    "bodySystem": "Ophthalmological",
+    "disease": "Conjunctivitis / Eye Infection",
+    "specialization": "ENT",
+    "riskLevel": "Low",
+    "confidence": 83,
+    "questions": [
+      { "question": "What symptoms do you have in the eye?", "options": ["Redness", "Discharge/pus", "Burning/itching", "Blurred vision"] },
+      { "question": "Is one eye or both eyes affected?", "options": ["Only one eye", "Both eyes"] },
+      { "question": "Is there sudden vision loss?", "options": ["Yes, significant", "Slightly blurred", "No"] },
+      { "question": "Did you have contact with someone with eye infection?", "options": ["Yes", "Not sure", "No"] }
+    ],
+    "advice": "Do not rub eyes. Keep eyes clean. See an eye doctor if vision is affected or pain is severe."
+  },
+  {
+    "id": 9,
+    "keywords": ["joint pain", "knee pain", "hip pain", "arthritis", "joint swelling", "joint stiffness"],
+    "bodySystem": "Musculoskeletal",
+    "disease": "Joint Pain / Arthritis",
+    "specialization": "Orthopedic",
+    "riskLevel": "Medium",
+    "confidence": 79,
+    "questions": [
+      { "question": "Which joint(s) are affected?", "options": ["Knee", "Hip", "Shoulder", "Wrist/ankle", "Multiple joints"] },
+      { "question": "Is there swelling or redness in the joint?", "options": ["Yes, both", "Only swelling", "Only redness", "No"] },
+      { "question": "Is the pain worse in the morning?", "options": ["Yes, worst in morning", "Throughout the day", "Evening/night", "No pattern"] },
+      { "question": "Did the pain start after an injury?", "options": ["Yes", "No, gradual onset", "After activity/exercise"] }
+    ],
+    "advice": "Rest the joint, apply ice/warm compress. See a doctor for evaluation of arthritis or injury."
+  },
+  {
+    "id": 10,
+    "keywords": ["breathing difficulty", "shortness of breath", "breathlessness", "wheezing", "asthma"],
+    "bodySystem": "Respiratory",
+    "disease": "Breathing Difficulty / Asthma / Respiratory Issue",
+    "specialization": "General Physician",
+    "riskLevel": "High",
+    "confidence": 88,
+    "questions": [
+      { "question": "How severe is the breathing difficulty?", "options": ["Cannot breathe properly", "Short of breath at rest", "Short of breath on exertion", "Mild"] },
+      { "question": "Do you hear wheezing when you breathe?", "options": ["Yes, clearly", "Mildly", "No"] },
+      { "question": "Do you have a history of asthma?", "options": ["Yes", "No", "Not sure"] },
+      { "question": "Did the breathing difficulty start suddenly?", "options": ["Yes, sudden onset", "Gradual worsening", "After exercise", "After exposure to dust/smoke"] }
+    ],
+    "advice": "Breathing difficulty is serious. If severe, call 112 immediately. Sit upright and stay calm."
+  },
+  {
+    "id": 11,
+    "keywords": ["diabetes", "blood sugar", "sugar", "thirst excessive", "frequent urination", "fatigue diabetes"],
+    "bodySystem": "Endocrine",
+    "disease": "Diabetes / High Blood Sugar",
+    "specialization": "General Physician",
+    "riskLevel": "Medium",
+    "confidence": 75,
+    "questions": [
+      { "question": "Are you experiencing excessive thirst?", "options": ["Yes, very thirsty", "Moderately", "No"] },
+      { "question": "Do you urinate frequently?", "options": ["Yes, very frequent", "Slightly more than usual", "No"] },
+      { "question": "Are you feeling unusually tired or weak?", "options": ["Yes, very tired", "Mild fatigue", "No"] },
+      { "question": "Do you have a known diagnosis of diabetes?", "options": ["Yes, Type 1", "Yes, Type 2", "No", "Not sure"] }
+    ],
+    "advice": "Monitor blood sugar levels. Follow prescribed diet. Consult your doctor for medication adjustment."
+  },
+  {
+    "id": 12,
+    "keywords": ["blood pressure", "hypertension", "high BP", "low BP", "dizziness", "bp"],
+    "bodySystem": "Cardiovascular",
+    "disease": "Blood Pressure Issue",
+    "specialization": "Cardiologist",
+    "riskLevel": "Medium",
+    "confidence": 78,
+    "questions": [
+      { "question": "What are your current BP readings?", "options": ["High (>140/90)", "Low (<90/60)", "Not sure", "Normal but feeling unwell"] },
+      { "question": "Are you on BP medication?", "options": ["Yes, taking regularly", "Yes, but missed doses", "No"] },
+      { "question": "Do you have headache or dizziness?", "options": ["Yes, severe", "Mild", "No"] },
+      { "question": "Are you experiencing chest pain or palpitations?", "options": ["Yes", "Palpitations only", "No"] }
+    ],
+    "advice": "Check BP readings regularly. Take medication as prescribed. See a cardiologist if readings are extreme."
+  },
+  {
+    "id": 13,
+    "keywords": ["child fever", "baby fever", "infant fever", "pediatric", "child sick"],
+    "bodySystem": "General",
+    "disease": "Pediatric Fever",
+    "specialization": "Pediatrician",
+    "riskLevel": "Medium",
+    "confidence": 85,
+    "questions": [
+      { "question": "How old is the child?", "options": ["Less than 3 months", "3–12 months", "1–5 years", "5–12 years"] },
+      { "question": "What is the child's temperature?", "options": ["Mild (99–100°F)", "Moderate (100–102°F)", "High (>102°F)"] },
+      { "question": "Is the child eating and drinking normally?", "options": ["Yes", "Reduced intake", "Refusing food/water"] },
+      { "question": "Is the child unusually sleepy or irritable?", "options": ["Very sleepy/lethargic", "Irritable/crying", "Normal behavior"] }
+    ],
+    "advice": "Keep child hydrated. Use fever-reducing medicine as age-appropriate. See a pediatrician if infant under 3 months has fever."
+  },
+  {
+    "id": 14,
+    "keywords": ["menstrual", "period pain", "dysmenorrhea", "irregular periods", "pelvic pain women"],
+    "bodySystem": "Reproductive",
+    "disease": "Menstrual Disorder / Gynecological Issue",
+    "specialization": "Gynecologist",
+    "riskLevel": "Low",
+    "confidence": 82,
+    "questions": [
+      { "question": "What symptoms are you experiencing?", "options": ["Painful periods", "Irregular periods", "Heavy bleeding", "Missed period"] },
+      { "question": "How severe is the pain?", "options": ["Severe (can't do daily activities)", "Moderate", "Mild", "No pain"] },
+      { "question": "Is the pain accompanied by nausea or vomiting?", "options": ["Yes", "Only nausea", "No"] },
+      { "question": "Is there any unusual discharge?", "options": ["Yes, unusual color/odor", "Normal discharge", "None"] }
+    ],
+    "advice": "Use pain relievers as needed. Consult a gynecologist for diagnosis of hormonal or structural issues."
+  },
+  {
+    "id": 15,
+    "keywords": ["ear pain", "earache", "ear infection", "ear discharge", "hearing loss"],
+    "bodySystem": "ENT",
+    "disease": "Ear Infection / Otitis",
+    "specialization": "ENT",
+    "riskLevel": "Low",
+    "confidence": 83,
+    "questions": [
+      { "question": "Which ear is affected?", "options": ["Left ear", "Right ear", "Both ears"] },
+      { "question": "Is there any discharge from the ear?", "options": ["Yes, pus/fluid", "Yes, blood", "No"] },
+      { "question": "Is there any hearing loss?", "options": ["Yes, significant", "Mild muffling", "No"] },
+      { "question": "Did symptoms start after swimming or water exposure?", "options": ["Yes", "No", "After cold/upper respiratory infection"] }
+    ],
+    "advice": "Do not insert anything in the ear. See an ENT specialist for ear pain with discharge or hearing loss."
+  },
+  {
+    "id": 16,
+    "keywords": ["urinary infection", "UTI", "burning urination", "frequent urination", "painful urination"],
+    "bodySystem": "Urological",
+    "disease": "Urinary Tract Infection (UTI)",
+    "specialization": "General Physician",
+    "riskLevel": "Medium",
+    "confidence": 87,
+    "questions": [
+      { "question": "Do you have burning or pain while urinating?", "options": ["Yes, severe", "Mild", "No"] },
+      { "question": "Is there increased frequency of urination?", "options": ["Yes, very frequent", "Slightly more frequent", "No"] },
+      { "question": "Do you see blood in the urine?", "options": ["Yes, clearly red", "Pinkish tinge", "No"] },
+      { "question": "Do you have fever or back/flank pain?", "options": ["Yes, both", "Only fever", "Only back pain", "No"] }
+    ],
+    "advice": "Drink plenty of water. See a doctor for urine test and appropriate antibiotic treatment."
+  },
+  {
+    "id": 17,
+    "keywords": ["anxiety", "stress", "panic", "worry", "mental health", "depression", "mood"],
+    "bodySystem": "Mental Health",
+    "disease": "Anxiety / Stress / Mental Health",
+    "specialization": "General Physician",
+    "riskLevel": "Low",
+    "confidence": 72,
+    "questions": [
+      { "question": "What are your main symptoms?", "options": ["Excessive worry", "Panic attacks", "Sadness/hopelessness", "Sleep problems"] },
+      { "question": "How long have you been experiencing these feelings?", "options": ["A few days", "2–4 weeks", "1–3 months", "More than 3 months"] },
+      { "question": "Is it affecting your daily life?", "options": ["Severely impacting work/relationships", "Moderately", "Mildly", "Not much"] },
+      { "question": "Have you had similar episodes before?", "options": ["Yes, multiple times", "Once before", "No, first time"] }
+    ],
+    "advice": "Talk to a trusted person. Practice breathing exercises. Consult a doctor or counselor — seeking help is strength."
+  },
+  {
+    "id": 18,
+    "keywords": ["vomiting", "nausea", "nausea vomiting", "throwing up"],
+    "bodySystem": "Digestive",
+    "disease": "Nausea / Vomiting",
+    "specialization": "General Physician",
+    "riskLevel": "Low",
+    "confidence": 78,
+    "questions": [
+      { "question": "How many times have you vomited in the last 24 hours?", "options": ["Once or twice", "3–5 times", "More than 5 times", "Not vomited, only nausea"] },
+      { "question": "Is there blood in the vomit?", "options": ["Yes, clearly blood", "Coffee-ground color", "No"] },
+      { "question": "Do you have abdominal pain along with vomiting?", "options": ["Yes, severe", "Mild cramping", "No"] },
+      { "question": "Can you keep fluids down?", "options": ["No, vomiting immediately", "With difficulty", "Yes, mostly"] }
+    ],
+    "advice": "Stay hydrated with small sips of ORS. Avoid solid food temporarily. See a doctor if vomiting persists or blood is present."
+  },
+  {
+    "id": 19,
+    "keywords": ["weakness", "fatigue", "tired", "exhaustion", "lack of energy", "lethargy"],
+    "bodySystem": "General",
+    "disease": "Generalized Weakness / Fatigue",
+    "specialization": "General Physician",
+    "riskLevel": "Low",
+    "confidence": 70,
+    "questions": [
+      { "question": "How long have you been feeling weak?", "options": ["Today", "2–7 days", "2–4 weeks", "More than a month"] },
+      { "question": "Is the weakness accompanied by fever?", "options": ["Yes", "No", "Had fever that resolved"] },
+      { "question": "Are you eating and drinking normally?", "options": ["Yes", "Reduced appetite", "Unable to eat"] },
+      { "question": "Any recent illness or heavy physical work?", "options": ["Yes, recent illness", "Yes, overworked", "No obvious cause"] }
+    ],
+    "advice": "Rest, eat balanced meals, stay hydrated. See a doctor if weakness is sudden, severe, or accompanied by other serious symptoms."
+  },
+  {
+    "id": 20,
+    "keywords": ["diarrhea", "loose stools", "gastroenteritis", "stomach flu", "watery stool"],
+    "bodySystem": "Digestive",
+    "disease": "Diarrhea / Gastroenteritis",
+    "specialization": "General Physician",
+    "riskLevel": "Medium",
+    "confidence": 85,
+    "questions": [
+      { "question": "How many loose stools in the last 24 hours?", "options": ["2–4 times", "5–8 times", "More than 8 times"] },
+      { "question": "Is there blood or mucus in the stool?", "options": ["Yes, blood", "Yes, mucus", "No"] },
+      { "question": "Do you have stomach cramps?", "options": ["Yes, severe", "Mild", "No"] },
+      { "question": "Are you able to drink fluids?", "options": ["Yes, drinking well", "Limited", "No, can't keep anything down"] }
+    ],
+    "advice": "Use ORS to prevent dehydration. Eat plain foods (rice, banana). See a doctor if blood in stool, high fever, or severe dehydration."
+  }
+]

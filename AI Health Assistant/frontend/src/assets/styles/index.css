@@ -1,0 +1,304 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    sans-serif;
+  color: #1c1c1e;
+  background: #f9fafb;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: #f5f8ff;
+  color: #1c1c1e;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+@layer components {
+  .form-group {
+    @apply w-full;
+  }
+
+  .form-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #374151;
+    letter-spacing: 0.01em;
+  }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .page-padding {
+    @apply px-4 py-5;
+  }
+
+  .card {
+    @apply rounded-card border border-border bg-white shadow-card transition-shadow duration-200;
+  }
+
+  .card:hover {
+    box-shadow: 0 6px 28px rgba(0, 0, 0, 0.10);
+  }
+
+  .input {
+    @apply h-11 w-full rounded-app border border-[#E5E7EB] bg-white px-3 text-sm text-foreground outline-none transition-all duration-200 placeholder:text-[#9CA3AF];
+  }
+
+  .input:focus {
+    border-color: #1A73E8;
+    box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.14);
+  }
+
+  .input-readonly {
+    @apply bg-[#F3F4F6] text-muted;
+  }
+
+  .input-error {
+    @apply border-[#EA4335];
+  }
+
+  .input-error:focus {
+    border-color: #EA4335;
+    box-shadow: 0 0 0 3px rgba(234, 67, 53, 0.14);
+  }
+
+  /* Single custom visibility toggle — hide browser-native password reveal controls */
+  .password-field-input::-ms-reveal,
+  .password-field-input::-ms-clear {
+    display: none;
+  }
+
+  .password-field-input::-webkit-credentials-auto-fill-button,
+  .password-field-input::-webkit-strong-password-auto-fill-button {
+    display: none;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .password-field-toggle {
+    background: transparent;
+    border: none;
+    padding: 0;
+    line-height: 0;
+    cursor: pointer;
+  }
+
+  .password-field-toggle:focus-visible {
+    outline: 2px solid #2563eb;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  .textarea {
+    @apply min-h-[120px] w-full rounded-app border border-[#E5E7EB] bg-white px-3 py-3 text-sm text-foreground outline-none transition-all duration-200 placeholder:text-[#9CA3AF];
+  }
+
+  .textarea:focus {
+    border-color: #1A73E8;
+    box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.14);
+  }
+
+  .textarea-error {
+    @apply border-[#EA4335];
+  }
+
+  .btn-primary {
+    @apply flex h-12 w-full items-center justify-center rounded-app px-4 font-semibold text-white shadow-sm transition-all duration-200 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60;
+    background: linear-gradient(135deg, #1A73E8 0%, #1557B0 100%);
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    background: linear-gradient(135deg, #1557B0 0%, #0D47A1 100%);
+    box-shadow: 0 4px 16px rgba(26, 115, 232, 0.35);
+    transform: translateY(-1px);
+  }
+
+  .btn-primary:active:not(:disabled) {
+    transform: scale(0.98) translateY(0);
+    box-shadow: none;
+  }
+
+  .btn-secondary {
+    @apply flex h-12 w-full items-center justify-center rounded-app border-2 border-primary bg-white px-4 font-semibold text-primary transition-all duration-200 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .btn-secondary:hover:not(:disabled) {
+    background-color: rgba(26, 115, 232, 0.08);
+    box-shadow: 0 2px 8px rgba(26, 115, 232, 0.15);
+  }
+
+  .btn-ghost {
+    @apply flex h-12 w-full items-center justify-center rounded-app border border-border bg-white px-4 font-medium text-muted transition-all duration-200 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .btn-ghost:hover:not(:disabled) {
+    @apply border-primary/30 bg-primary/5 text-primary;
+  }
+
+  .chip {
+    @apply rounded-pill border border-border bg-white px-4 py-2 text-sm font-medium text-muted shadow-sm transition-all duration-200;
+  }
+
+  .chip:hover {
+    @apply border-primary/30 bg-primary/5 text-primary;
+    box-shadow: 0 2px 8px rgba(26, 115, 232, 0.12);
+  }
+
+  .chip-active {
+    @apply border-primary bg-gradient-primary text-white shadow-sm;
+    box-shadow: 0 2px 10px rgba(26, 115, 232, 0.30);
+  }
+}
+
+/* Gradient background for auth/onboarding pages */
+.bg-background {
+  background: linear-gradient(160deg, #f0f6ff 0%, #f9fafb 60%);
+}
+
+/* Glass-morphism card variant */
+.card-glass {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* Smooth scroll */
+* {
+  scroll-behavior: smooth;
+}
+
+/* Better selection color */
+::selection {
+  background: rgba(26, 115, 232, 0.2);
+  color: #0D47A1;
+}
+
+/* OTP input enhancement */
+input[inputmode="numeric"].otp-digit {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+/* Pulse ring for active mic button */
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.65); opacity: 0; }
+}
+
+.pulse-ring::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 3px solid currentColor;
+  animation: pulse-ring 1.6s ease-out infinite;
+}
+
+.pulse-ring::after {
+  content: '';
+  position: absolute;
+  inset: -16px;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  animation: pulse-ring 1.6s ease-out 0.5s infinite;
+}
+
+/* Hero gradient header utility */
+.hero-gradient {
+  background: linear-gradient(135deg, #1A73E8 0%, #0D47A1 100%);
+}
+
+/* Frosted glass utility */
+.glass {
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* Micro shadow for interactive elements */
+.shadow-micro {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.07), 0 1px 2px rgba(0,0,0,0.05);
+}
+
+/* Floating action button */
+.fab {
+  position: fixed;
+  bottom: 5.5rem;
+  right: 1rem;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1A73E8, #1557B0);
+  color: white;
+  box-shadow: 0 4px 20px rgba(26, 115, 232, 0.40);
+  transition: all 0.2s;
+}
+
+.fab:hover {
+  box-shadow: 0 6px 24px rgba(26, 115, 232, 0.50);
+  transform: translateY(-2px);
+}
+
+/* Gradient badge */
+.badge-primary {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, #1A73E8, #1557B0);
+  color: white;
+}
+
+/* Scrollbar styling for the app */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(26, 115, 232, 0.25);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(26, 115, 232, 0.45);
+}

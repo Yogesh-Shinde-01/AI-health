@@ -1,0 +1,273 @@
+{
+  "language": {
+    "title": "अपनी भाषा चुनें",
+    "continue": "जारी रखें",
+    "support": "मदद चाहिए? सहायता से संपर्क करें।"
+  },
+  "welcome": {
+    "title": "AI Health Assistant",
+    "tagline": "आपका व्यक्तिगत स्वास्थ्य साथी",
+    "getStarted": "शुरू करें",
+    "iAmDoctor": "मैं डॉक्टर हूं",
+    "terms": "उपयोग की शर्तें",
+    "privacy": "गोपनीयता नीति",
+    "features": {
+      "ai": "AI लक्षण विश्लेषण",
+      "voice": "वॉइस और टेक्स्ट सहायता",
+      "doctor": "डॉक्टर समीक्षा",
+      "secure": "सुरक्षित और भरोसेमंद"
+    }
+  },
+  "login": {
+    "title": "वापसी पर स्वागत है!",
+    "subtitle": "जारी रखने के लिए लॉगिन करें",
+    "createTitle": "खाता बनाएं",
+    "createSubtitle": "जारी रखने के लिए पंजीकरण करें",
+    "mobilePlaceholder": "मोबाइल नंबर",
+    "sendOtp": "OTP भेजें",
+    "continueWith": "या जारी रखें",
+    "google": "Google से जारी रखें",
+    "apple": "Apple से जारी रखें",
+    "newUser": "नए उपयोगकर्ता?",
+    "registerNow": "अभी पंजीकरण करें",
+    "existingUser": "पहले से खाता है?",
+    "loginNow": "लॉगिन करें",
+    "invalidMobile": "मान्य 10 अंकों का मोबाइल नंबर दर्ज करें",
+    "otpSent": "OTP सफलतापूर्वक भेजा गया",
+    "socialSoon": "सोशल लॉगिन जल्द उपलब्ध होगा"
+  },
+  "otp": {
+    "title": "OTP दर्ज करें",
+    "subtitle": "हमने 6 अंकों का OTP भेजा है",
+    "resend": "OTP दोबारा भेजें",
+    "resendIn": "{{seconds}}s में OTP फिर भेजें",
+    "next": "अगला",
+    "invalid": "मान्य 6 अंकों का OTP दर्ज करें"
+  },
+  "profile": {
+    "title": "अपनी प्रोफ़ाइल पूरी करें",
+    "fullName": "पूरा नाम",
+    "age": "उम्र",
+    "gender": "लिंग",
+    "height": "ऊंचाई (सेमी)",
+    "weight": "वजन (किग्रा)",
+    "male": "पुरुष",
+    "female": "महिला",
+    "other": "अन्य",
+    "next": "अगला"
+  },
+  "medicalHistory": {
+    "title": "चिकित्सा इतिहास",
+    "subtitle": "अपने स्वास्थ्य पृष्ठभूमि के बारे में बताएं",
+    "chronicDisease": "क्या आपको कोई पुरानी बीमारी है?",
+    "allergies": "कोई ज्ञात एलर्जी?",
+    "currentMedicines": "वर्तमान दवाएं (यदि कोई हों)",
+    "allergyPlaceholder": "एलर्जी विवरण दर्ज करें",
+    "currentMedicinePlaceholder": "दवाएं कॉमा से अलग करें",
+    "diseases": {
+      "none": "नहीं",
+      "diabetes": "डायबिटीज",
+      "bp": "बीपी",
+      "thyroid": "थायरॉइड",
+      "asthma": "अस्थमा",
+      "heart": "हृदय रोग",
+      "other": "अन्य"
+    }
+  },
+  "home": {
+    "greeting": "नमस्ते, {{name}}",
+    "subtitle": "आज मैं आपकी कैसे मदद कर सकता हूं?",
+    "describeSymptoms": "अपने लक्षण बताएं",
+    "tapHint": "बोलें या टाइप करें",
+    "history": "मेरा इतिहास",
+    "prescriptions": "पर्चियां",
+    "findDoctor": "डॉक्टर खोजें",
+    "healthTips": "स्वास्थ्य सुझाव",
+    "emergency": "आपातकालीन सहायता",
+    "emergencyAlert": "आपातकालीन सहायता जल्द जोड़ी जाएगी।"
+  },
+  "symptoms": {
+    "title": "अपने लक्षण बताएं",
+    "typePlaceholder": "अपने लक्षण यहाँ टाइप करें या बोलें...",
+    "chars": "{{count}} / {{max}} अक्षर"
+  },
+  "aiQuestions": {
+    "title": "AI प्रश्न पूछ रहा है",
+    "mock": {
+      "fever": {
+        "question": "क्या आपको बुखार है?",
+        "options": ["हाँ, मुझे बुखार है", "नहीं, मुझे बुखार नहीं है", "पक्का नहीं"]
+      },
+      "temperature": {
+        "question": "आपके शरीर का तापमान क्या है?",
+        "options": ["सामान्य (98°F से कम)", "कम (97°F से कम)", "मध्यम (99°F–100°F)", "उच्च (101°F–103°F)", "बहुत उच्च (103°F से ऊपर)"]
+      },
+      "duration": {
+        "question": "आपको कितने दिनों से बुखार है?",
+        "options": ["आज", "1 – 2 दिन", "3 – 5 दिन", "5 दिन से अधिक"]
+      }
+    }
+  },
+  "moreQuestions": {
+    "title": "और प्रश्न",
+    "tapToSpeak": "बोलने के लिए टैप करें",
+    "chillsQuestion": "क्या आपको ठंड या कंपकंपी है?"
+  },
+  "additionalNotes": {
+    "title": "अतिरिक्त नोट्स",
+    "subtitle": "क्या आप और कोई विवरण साझा करना चाहेंगे?",
+    "typePlaceholder": "अन्य लक्षण, एलर्जी, हाल की यात्रा, चिकित्सा स्थिति आदि...",
+    "tapSpeakOrType": "बोलें या टाइप करें"
+  },
+  "summary": {
+    "title": "सारांश और जोखिम",
+    "cardTitle": "AI लक्षण सारांश",
+    "yourSymptoms": "आपके लक्षण",
+    "doctorReview": "डॉक्टर की समीक्षा की सलाह दी जाती है।",
+    "disclaimer": "यह निदान नहीं है। कृपया डॉक्टर से परामर्श करें।",
+    "submitToDoctor": "डॉक्टर को भेजें →",
+    "mockSymptoms": ["बुखार (2 दिन)", "शरीर दर्द", "सिरदर्द", "कंपकंपी", "खांसी नहीं"],
+    "labels": {
+      "fever": "बुखार",
+      "temperature": "शरीर का तापमान",
+      "feverDuration": "बुखार की अवधि",
+      "chills": "ठंड / कंपकंपी",
+      "voiceNotes": "आवाज़ नोट्स (और प्रश्न)",
+      "additionalNotes": "अतिरिक्त नोट्स"
+    }
+  },
+  "doctorDashboard": {
+    "title": "डॉक्टर डैशबोर्ड",
+    "all": "सभी",
+    "pending": "लंबित",
+    "reviewed": "समीक्षित",
+    "noConsultations": "अभी कोई परामर्श नहीं",
+    "view": "देखें"
+  },
+  "doctorConsultation": {
+    "title": "रोगी सारांश",
+    "symptomsSummary": "लक्षण सारांश",
+    "medicalHistory": "चिकित्सा इतिहास",
+    "aiAssessment": "AI आकलन",
+    "possibleCause": "संभावित कारण",
+    "suggestedTests": "सुझाए गए परीक्षण",
+    "needMoreInfo": "और जानकारी चाहिए",
+    "createRx": "Rx बनाएं",
+    "messagePatient": "रोगी को संदेश",
+    "sendMessage": "संदेश भेजें"
+  },
+  "createPrescription": {
+    "title": "पर्ची बनाएं",
+    "diagnosis": "निदान / प्रारंभिक राय",
+    "medicines": "दवाएं",
+    "addMedicine": "दवा जोड़ें",
+    "orsAdvice": "ORS / सलाह",
+    "dateTime": "तारीख और समय",
+    "saveDraft": "ड्राफ्ट सहेजें"
+  },
+  "editPrescription": {
+    "title": "पर्ची संपादित करें",
+    "approve": "स्वीकृत करें"
+  },
+  "prescriptionApproved": {
+    "title": "पर्ची स्वीकृत",
+    "subtitle": "पर्ची स्वीकृत हो गई है और रोगी को भेज दी गई है।",
+    "viewPrescription": "पर्ची देखें",
+    "findPharmacy": "पास की फार्मेसी खोजें",
+    "backToDashboard": "डैशबोर्ड पर लौटें"
+  },
+  "patientPrescription": {
+    "title": "मेरी पर्ची",
+    "diagnosis": "निदान",
+    "medicines": "दवाएं",
+    "advice": "सलाह",
+    "findPharmacy": "पास की फार्मेसी खोजें",
+    "signature": "डॉक्टर के हस्ताक्षर"
+  },
+  "pdfShare": {
+    "title": "पर्ची रिपोर्ट",
+    "downloadPdf": "PDF डाउनलोड करें",
+    "share": "साझा करें",
+    "shareSuccess": "लिंक कॉपी हो गया"
+  },
+  "followUp": {
+    "title": "फॉलो-अप बुक करें",
+    "selectDoctor": "डॉक्टर चुनें",
+    "notes": "नोट्स",
+    "notesPlaceholder": "वैकल्पिक नोट्स जोड़ें",
+    "confirm": "फॉलो-अप पुष्टि करें",
+    "morning": "सुबह (9–12)",
+    "afternoon": "दोपहर (12–5)",
+    "evening": "शाम (5–8)",
+    "booked": "फॉलो-अप सफलतापूर्वक बुक हुआ"
+  },
+  "history": {
+    "title": "मेरा इतिहास",
+    "consultations": "परामर्श",
+    "prescriptions": "पर्चियां",
+    "noConsultations": "कोई परामर्श नहीं मिला",
+    "noPrescriptions": "कोई पर्ची नहीं मिली",
+    "bookFollowUp": "फॉलो-अप बुक करें"
+  },
+  "bottomNav": {
+    "home": "होम",
+    "dashboard": "डैशबोर्ड",
+    "history": "इतिहास",
+    "prescription": "पर्ची",
+    "profile": "प्रोफ़ाइल"
+  },
+  "toast": {
+    "savedDraft": "ड्राफ्ट सफलतापूर्वक सहेजा गया",
+    "prescriptionApproved": "पर्ची स्वीकृत हुई",
+    "profileUpdated": "प्रोफ़ाइल अपडेट हुई",
+    "historyUpdated": "चिकित्सा इतिहास अपडेट हुआ"
+  },
+  "mock": {
+    "causes": {
+      "general": "सामान्य वायरल बीमारी",
+      "viralFever": "संभावित वायरल बुखार",
+      "coldCough": "सामान्य सर्दी और खांसी",
+      "digestive": "संभावित पाचन समस्या"
+    },
+    "tests": {
+      "cbc": "CBC टेस्ट",
+      "ecg": "ECG समीक्षा",
+      "physician": "तुरंत चिकित्सक परामर्श",
+      "rest": "आराम और पानी",
+      "temperature": "शरीर का तापमान देखें",
+      "hydration": "अधिक तरल लें"
+    }
+  },
+  "forms": {
+    "voiceInput": "वॉइस इनपुट",
+    "typeInput": "टाइप इनपुट",
+    "startListening": "बोलने के लिए टैप करें",
+    "stopListening": "सुनना बंद करें",
+    "transcriptPlaceholder": "आपकी आवाज यहां दिखेगी...",
+    "typePlaceholder": "अपने लक्षण यहां लिखें",
+    "notesPlaceholder": "अधिक जानकारी लिखें",
+    "medicineName": "दवा का नाम",
+    "dosage": "मात्रा",
+    "frequency": "बारंबारता",
+    "duration": "अवधि",
+    "remove": "हटाएं"
+  },
+  "common": {
+    "next": "अगला",
+    "back": "वापस",
+    "skip": "छोड़ें",
+    "submit": "जमा करें",
+    "loading": "लोड हो रहा है...",
+    "yes": "हाँ",
+    "no": "नहीं",
+    "notSure": "पक्का नहीं",
+    "view": "देखें",
+    "download": "डाउनलोड",
+    "share": "साझा करें",
+    "save": "सहेजें",
+    "cancel": "रद्द करें",
+    "or": "या",
+    "unknown": "अज्ञात",
+    "loadError": "डेटा लोड नहीं हो सका। कृपया पुनः प्रयास करें।"
+  }
+}

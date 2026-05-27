@@ -1,0 +1,415 @@
+#fix: Problem 01
+replace the hard coded question from Smart Dataset Engine + Groq API
+make sure the question which is asked is totally form the Smart Dataset Engine + Groq API  no any hard coded questoin asked
+Your task is to transform my existing AI Health Assistant into a scalable hybrid AI system using:
+
+1. Smart Dataset Engine (primary engine)
+2. Groq API with LLaMA 3 (fallback AI engine)
+3. Dynamic AI questioning system
+4. Doctor specialization recommendation
+5. Risk analysis engine
+6. Emergency symptom detection
+7. Redux-based consultation state management
+
+IMPORTANT GOALS:
+- Reduce AI API calls
+- Keep system fast
+- Keep system free/low cost
+- Improve maintainability
+- Make architecture production-ready
+- Keep frontend clean and dynamic
+- Keep backend modular and scalable
+
+====================================================
+CURRENT FLOW
+====================================================
+
+/symptoms
+/ai-questions
+/more-questions
+/additional-notes
+/summary
+/submission-success
+
+====================================================
+REQUIRED SYSTEM ARCHITECTURE
+====================================================
+
+Frontend (React + Redux)
+        ↓
+Backend API (Node.js + Express)
+        ↓
+AI Orchestrator Service
+        ↓
+ ┌───────────────────────┐
+ │ Smart Dataset Engine  │
+ └───────────────────────┘
+        ↓ fallback
+ ┌───────────────────────┐
+ │ Groq API (LLaMA 3)    │
+ └───────────────────────┘
+
+====================================================
+REQUIRED IMPLEMENTATION DETAILS
+====================================================
+
+1. CREATE AI ORCHESTRATOR
+====================================================
+
+Create:
+
+backend/services/aiOrchestrator.js
+
+This service must:
+- Handle symptom analysis
+- Run emergency detection first
+- Run dataset engine first
+- Fallback to Groq if no dataset match
+- Generate dynamic questions
+- Generate disease prediction
+- Generate specialization
+- Generate risk level
+- Return structured JSON responses
+
+====================================================
+2. REDUX STATE STRUCTURE
+====================================================
+
+Replace scattered Redux states with ONE centralized consultation object.
+
+Required structure:
+
+consultation: {
+  symptoms: "",
+  detectedSymptom: "",
+  bodySystem: "",
+  specialization: "",
+  disease: "",
+  riskLevel: "",
+  confidence: 0,
+  generatedQuestions: [],
+  answers: [],
+  additionalNotes: "",
+  recommendedDoctors: []
+}
+
+====================================================
+3. DATASET ENGINE
+====================================================
+
+Create:
+
+backend/data/symptoms.json
+
+Each dataset item must contain:
+
+{
+  "id": 1,
+  "keywords": ["fever", "headache"],
+  "bodySystem": "General",
+  "disease": "Viral Fever",
+  "specialization": "General Physician",
+  "riskLevel": "Low",
+  "confidence": 85,
+  "questions": [
+    "How long do you have fever?",
+    "Do you have chills?"
+  ],
+  "advice": "Drink water and take rest"
+}
+
+====================================================
+4. DATASET SEARCH ENGINE
+====================================================
+
+Create:
+
+backend/services/datasetService.js
+
+Requirements:
+- Partial keyword matching
+- Score-based matching
+- Best-match selection
+- Case-insensitive search
+- Return confidence score
+- Return generated questions
+- Return specialization
+- Return risk level
+
+If no match:
+return found: false
+
+====================================================
+5. EMERGENCY DETECTION ENGINE
+====================================================
+
+Create emergency detection BEFORE dataset/Groq logic.
+
+Emergency keywords example:
+- chest pain
+- breathing difficulty
+- blood vomiting
+- unconscious
+- seizure
+
+If emergency detected:
+- immediately return emergency response
+- skip Groq calls
+- show emergency alert
+- set riskLevel = "Critical"
+
+====================================================
+6. GROQ API INTEGRATION
+====================================================
+
+Use Groq API ONLY as fallback.
+
+Requirements:
+- Use llama3-70b-8192
+- Store API key in backend/.env ONLY
+- Never expose API key in frontend
+- Add try/catch error handling
+- Return structured JSON response
+- Limit unnecessary API calls
+
+====================================================
+7. DYNAMIC QUESTION SYSTEM
+====================================================
+
+Replace ALL hardcoded questions.
+
+Current hardcoded:
+- Fever?
+- Temperature?
+- Fever duration?
+- Chills?
+
+REMOVE THEM.
+
+Questions must come dynamically from:
+- dataset engine
+OR
+- Groq API
+
+Generated questions must be stored in:
+
+consultation.generatedQuestions
+
+====================================================
+8. PAGE FLOW REQUIREMENTS
+====================================================
+
+/symptoms
+--------------------------------
+After setSymptoms(text):
+1. Emergency detection
+2. Dataset engine
+3. Groq fallback if needed
+4. Store:
+   - detectedSymptom
+   - bodySystem
+   - specialization
+   - generatedQuestions
+
+/ai-questions
+--------------------------------
+Show:
+generatedQuestions[0]
+generatedQuestions[1]
+
+Store answers in:
+consultation.answers
+
+/more-questions
+--------------------------------
+Show:
+generatedQuestions[2]
+generatedQuestions[3]
+
+Store answers in:
+consultation.answers
+
+/additional-notes
+--------------------------------
+NO CHANGE REQUIRED
+
+/summary
+--------------------------------
+Generate final:
+- disease
+- confidence
+- specialization
+- riskLevel
+- recommended doctors
+
+Display:
+- Symptoms
+- Answers
+- Possible Disease
+- Confidence %
+- Risk Level
+- Recommended Specialist
+- Doctor List
+
+/submission-success
+--------------------------------
+NO CHANGE REQUIRED
+
+====================================================
+9. FINAL AI ANALYSIS
+====================================================
+
+After all answers collected:
+Run final AI analysis using:
+- symptoms
+- answers
+- additional notes
+
+Generate:
+- disease
+- confidence
+- specialization
+- riskLevel
+- medical advice
+
+====================================================
+10. DOCTOR FILTERING
+====================================================
+
+Filter doctors by specialization.
+
+Example:
+
+const filteredDoctors = doctors.filter(
+  doc => doc.specialization === specialization
+);
+
+====================================================
+11. BACKEND STRUCTURE
+====================================================
+
+Required backend structure:
+
+backend/
+│
+├── routes/
+├── controllers/
+├── services/
+│     ├── aiOrchestrator.js
+│     ├── datasetService.js
+│     ├── groqService.js
+│     ├── emergencyService.js
+│
+├── data/
+│     └── symptoms.json
+│
+├── middleware/
+├── utils/
+├── server.js
+└── .env
+
+====================================================
+12. FRONTEND REQUIREMENTS
+====================================================
+
+Use:
+- React
+- Redux Toolkit
+- Dynamic question rendering
+- Loading states
+- Error handling
+- Clean UI
+- Reusable components
+
+====================================================
+13. IMPORTANT RULES
+====================================================
+
+- Do NOT hardcode medical questions
+- Do NOT expose Groq API key
+- Do NOT call Groq unnecessarily
+- Dataset engine should always run first
+- Emergency detection should always run first
+- Keep API responses structured
+- Make code modular and scalable
+- Add comments explaining architecture
+- Use async/await properly
+- Add proper error handling
+
+====================================================
+14. REQUIRED OUTPUT
+====================================================
+
+Generate:
+1. Full backend architecture
+2. Updated Redux slice
+3. Dataset engine code
+4. AI orchestrator code
+5. Groq integration code
+6. Emergency detection code
+7. Dynamic question rendering logic
+8. Updated frontend flow
+9. API route structure
+10. Best practices
+11. Scalability improvements
+12. Production-ready folder structure
+
+IMPORTANT:
+All code should be production-quality, modular, scalable, clean, and beginner-friendly with comments explaining every major step.
+
+
+-------------------------------------------------------------------------------------------------------------------------------------
+fix it :Problem02
+I have a healthcare web/mobile app with two user roles: Patient and Doctor. Here are the issues to fix:
+
+Issue 1 — Profile Data Not Persisting After Registration
+After a user (Patient or Doctor) completes registration and logs in, their profile page should automatically display all the information they entered during signup — it should never show empty fields if data was already provided.
+
+Patient profile must display: Full Name, Age, Gender, Height, Weight, Blood Group, Date of Birth, Address, Emergency Contact
+Doctor profile must display: Full Name, Phone Number, Email Address, Profile Picture, Specialization, Hospital/Clinic Name, Consultation Fee, Availability status, Years of Experience, Rating, Total Patients
+On login, fetch the authenticated user's data from the database/backend and pre-populate all profile fields with the stored values
+Do not show placeholder text like "Enter your full name" if the value already exists in the database
+
+
+Issue 2 — Doctor Dashboard Shows Blank After Info Popup
+When a Doctor logs in, a popup/modal appears briefly, but after dismissing it the dashboard body renders completely blank — stats cards show 0 and the rest of the screen is empty white space.
+Fix the following:
+
+After the popup is closed, properly render the full dashboard including: Pending / Reviewed / Today / Total stats cards, Quick Actions (Find Patient, Write Prescription, Emergency, Schedule), and the Pending Reviews section
+Ensure all dashboard data is fetched from the backend on login and correctly passed to the dashboard component state
+The blank screen is likely caused by a state reset or conditional render bug triggered when the modal closes — audit the modal dismiss handler and ensure it does not clear dashboard state or block re-rendering
+Dashboard should show real-time data; if no records exist yet, show appropriate empty states (like "All caught up!") — not a blank page
+----------------------------------------------------------------------------------------------------------------------------------
+fix problem 03
+Fix the patient profile page — all fields show "Not provided" and name shows "User" after registration and login. Share and fix these files only:
+
+patientSlice.ts
+patientsService.ts
+PatientLoginForm.tsx
+OTP verification component
+Storage utils (readPatientExtendedProfile, writePatientExtendedProfile, readRegisterDraft)
+
+Fix exactly these 5 things:
+1. Fetch profile on mount — In PatientMyProfilePage, add useEffect that calls the get-profile API on mount and dispatches setProfile(data) to Redux. Right now nothing is fetched on mount so the page always shows empty.
+2. Dispatch profile after login — In PatientLoginForm, after successful login/auth, immediately call the profile API and dispatch setProfile + setMedicalHistory before navigating to /home. Currently login never populates Redux with profile data.
+3. Persist profile through OTP flow — After OTP verification succeeds, call profile API and dispatch setProfile before clearing registration state. Right now finalizePatientRegistrationData calls dispatch(logout()) which wipes the profile.
+4. Fix extended profile storage — Console log both the key used in writePatientExtendedProfile and readPatientExtendedProfile and confirm they match. If mismatched, fix the key so email, DOB, address and emergency contact are correctly persisted and read back.
+5. Show name immediately — After registration or login, ensure state.patient.profile.fullName is set so the avatar shows initials and not "U" / "User". Use readRegisterDraft().fullName as fallback if API hasn't responded yet.
+Do not touch any doctor-related code. Patient flow only.
+----------------------------------------------------------------------------------
+fix problem 04
+In my AI Health Assistant app, find and remove every single hardcoded patient and doctor value across the entire frontend. Replace all hardcoded data with real API calls to the backend. Apply the following strictly without changing any UI layout or styling:
+
+Find every hardcoded value like doctor name, specialization, clinic name, consultation fee, rating, total patients, years of experience, availability, patient name, age, gender, blood group, phone, email, address, consultation history, prescription data — remove all of them
+Replace hardcoded patient profile data with GET /api/patient/profile call using getPatientProfile() from patientService.js
+Replace hardcoded doctor profile data with GET /api/doctor/profile call using getDoctorProfile() from doctorService.js
+Replace hardcoded doctor list with GET /api/doctors?specialization= call using getDoctorsBySpecialization(specialization) from doctorService.js
+Replace hardcoded patient consultation history with GET /api/patient/consultations call using getPatientConsultations() from patientService.js
+Replace hardcoded patient prescription data with GET /api/patient/prescriptions call using getPatientPrescriptions() from patientService.js
+Replace hardcoded doctor consultation list with GET /api/doctor/consultations call using getDoctorConsultations() from doctorService.js
+Replace hardcoded doctor patient list with GET /api/doctor/patients call using getDoctorPatients() from doctorService.js
+Add loading spinner on every screen while API call is in progress
+Add empty state message on every screen when API returns no data — "No consultations yet", "No prescriptions yet", "No patients assigned yet"
+Add error message on every screen if API call fails — "Failed to load data. Please try again."
+
+Do NOT hardcode any patient or doctor data anywhere in the app. Do NOT change any UI layout, styling, or navigation flow. Do NOT break any existing working feature.
