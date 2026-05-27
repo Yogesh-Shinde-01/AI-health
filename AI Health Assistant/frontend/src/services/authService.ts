@@ -41,6 +41,9 @@ export interface RegisterPatientPayload {
   phone: string
   email?: string
   password: string
+  chronicDiseases?: string[]
+  allergies?: string[]
+  currentMedicines?: string[]
 }
 
 export interface RegisterDoctorPayload {

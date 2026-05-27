@@ -38,7 +38,7 @@ import CaseStatusBadge from '@/components/ui/CaseStatusBadge'
 import { useFieldArray, useForm } from 'react-hook-form'
 import type { TFunction } from 'i18next'
 import { useTranslation } from 'react-i18next'
-import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { Navigate, useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { z } from 'zod'
 import { sendOtp, verifyOtp } from '@/services/authService'
 import { finalizeDoctorRegistrationData, finalizePatientRegistrationData } from '@/pages/auth/authFlow'
@@ -52,7 +52,7 @@ import {
 import { bookFollowUp } from '@/services/followUpsService'
 import { getDoctorProfile, getDoctors, updateDoctorProfile } from '@/services/doctorsService'
 import { getProfile, updateMedicalHistory, updateProfile } from '@/services/patientsService'
-import { analyzeSymptoms } from '@/services/aiService'
+import { analyzeSymptoms, fetchNextQuestion, runFinalAnalysis } from '@/services/aiService'
 import {
   approvePrescription,
   createPrescription,
@@ -80,6 +80,8 @@ import {
   resetConsultation,
   setAiAnalysis,
   setDynamicAnswer,
+  syncDynamicQaToAnswers,
+  setAiQuestions,
   setRiskLevel,
   setSymptomQuestionData,
   setSymptoms,
@@ -938,6 +940,7 @@ export const SymptomsPage = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
+  const { showToast } = useToast()
   const [tab, setTab] = useState<'voice' | 'type'>('voice')
   const [recordSeconds, setRecordSeconds] = useState(0)
   const { transcript, isListening, startListening, stopListening, isSupported, error } = useVoiceInput()
@@ -981,26 +984,66 @@ export const SymptomsPage = () => {
     setAnalyzing(true)
     try {
       const result = await analyzeSymptoms(trimmed)
+      if (result.isEmergency) {
+        dispatch(
+          setAiAnalysis({
+            isEmergency: true,
+            detectedSymptom: result.detectedSymptom,
+            bodySystem: result.bodySystem,
+            disease: result.disease,
+            aiSpecialization: result.specialization,
+            riskLevel: result.riskLevel,
+            confidence: result.confidence,
+            questions: [],
+            aiAdvice: result.advice,
+            emergencyMessage: result.emergencyMessage,
+          }),
+        )
+        navigate('/ai-questions')
+        return
+      }
+
+      const first = await fetchNextQuestion(trimmed, [])
+      if (first.done === false && first.question) {
+        dispatch(
+          setAiAnalysis({
+            isEmergency: false,
+            detectedSymptom: result.detectedSymptom,
+            bodySystem: result.bodySystem,
+            disease: result.disease,
+            aiSpecialization: result.specialization,
+            riskLevel: result.riskLevel,
+            confidence: result.confidence,
+            questions: [first.question],
+            aiAdvice: result.advice,
+            emergencyMessage: result.emergencyMessage,
+          }),
+        )
+        navigate('/ai-questions')
+        return
+      }
+
       dispatch(
         setAiAnalysis({
-          isEmergency: result.isEmergency,
+          isEmergency: false,
           detectedSymptom: result.detectedSymptom,
           bodySystem: result.bodySystem,
           disease: result.disease,
           aiSpecialization: result.specialization,
           riskLevel: result.riskLevel,
           confidence: result.confidence,
-          questions: result.questions,
+          questions: [],
           aiAdvice: result.advice,
           emergencyMessage: result.emergencyMessage,
         }),
       )
+      showToast(t('symptoms.questionGenFailed') || 'Could not generate follow-up questions. Please try again.')
+      navigate('/ai-questions')
     } catch {
-      // AI unavailable — fall through to hardcoded question flow
+      showToast(t('symptoms.analyzeFailed') || 'Symptom analysis failed. Please try again.')
     } finally {
       setAnalyzing(false)
     }
-    navigate('/ai-questions')
   }
 
   return (
@@ -1093,21 +1136,28 @@ export const AiQuestionsPage = () => {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
+  const { showToast } = useToast()
   const saved = useAppSelector((state) => state.consultation.symptomData)
   const aiQuestions = useAppSelector((state) => state.consultation.aiQuestions)
   const savedDynamic = useAppSelector((state) => state.consultation.dynamicAnswers)
-  const hasDynamic = aiQuestions.length >= 2
+  const isEmergency = useAppSelector((state) => state.consultation.isEmergency)
+  const emergencyMessage = useAppSelector((state) => state.consultation.emergencyMessage)
+  const hasDynamic = aiQuestions.length >= 1
+  const symptoms = useAppSelector((state) => state.consultation.currentSymptoms)
+  const additionalNotes = useAppSelector((state) => state.consultation.symptomData.additionalNotes)
+  const [questionError, setQuestionError] = useState<string | null>(null)
 
   // Hardcoded fallback state
   const [hasFever, setHasFever] = useState<FeverAnswer | null>(() => saved.hasFever)
   const [temperature, setTemperature] = useState<TemperatureBand | null>(() => saved.temperature)
   const sectionBRef = useRef<HTMLDivElement | null>(null)
 
-  // Dynamic question state
-  const [dynA0, setDynA0] = useState<string>(() => savedDynamic[0] ?? '')
-  const [dynA1, setDynA1] = useState<string>(() => savedDynamic[1] ?? '')
-  const dynShowQ2 = dynA0 !== ''
-  const dynSectionBRef = useRef<HTMLDivElement | null>(null)
+  // Dynamic question state (one-at-a-time, no fixed limit)
+  const [currentIdx, setCurrentIdx] = useState<number>(0)
+  const [dynAnswer, setDynAnswer] = useState<string>(() => savedDynamic[0] ?? '')
+  const [doneAsking, setDoneAsking] = useState<boolean>(false)
+  const [loadingNext, setLoadingNext] = useState<boolean>(false)
+  const dynSectionRef = useRef<HTMLDivElement | null>(null)
 
   const feverItems: { key: FeverAnswer; label: string }[] = [
     { key: 'yes', label: t('aiQuestions.mock.fever.options.0') },
@@ -1122,13 +1172,13 @@ export const AiQuestionsPage = () => {
   }))
 
   const showTemperature = hasFever !== null
-  const canNext = hasDynamic ? dynA0 !== '' && dynA1 !== '' : hasFever !== null && temperature !== null
+  const canNext = hasDynamic ? (doneAsking ? true : dynAnswer !== '') : hasFever !== null && temperature !== null
 
   useEffect(() => {
     if (hasDynamic) {
-      if (!dynShowQ2 || !dynSectionBRef.current) return
+      if (!dynSectionRef.current) return
       window.requestAnimationFrame(() => {
-        dynSectionBRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+        dynSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
       })
     } else {
       if (!showTemperature || !sectionBRef.current) return
@@ -1136,57 +1186,165 @@ export const AiQuestionsPage = () => {
         sectionBRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
       })
     }
-  }, [showTemperature, dynShowQ2, hasDynamic])
+  }, [showTemperature, hasDynamic, currentIdx])
+
+  const buildHistory = (answersByIndex: string[]) =>
+    aiQuestions
+      .map((q, idx) => ({ question: q.question, answer: answersByIndex[idx] ?? '' }))
+      .filter((pair) => pair.question && pair.answer)
+
+  const runFinalAnalysisAndProceed = async (history: { question: string; answer: string }[]) => {
+    const answersRecord = Object.fromEntries(history.map((h) => [h.question, h.answer]))
+    try {
+      const final = await runFinalAnalysis(symptoms, answersRecord, additionalNotes)
+      dispatch(
+        setAiAnalysis({
+          disease: final.disease,
+          confidence: final.confidence,
+          aiSpecialization: final.specialization,
+          riskLevel: final.riskLevel,
+        }),
+      )
+    } catch {
+      // Keep initial triage values if final analysis fails.
+    }
+    dispatch(syncDynamicQaToAnswers())
+    navigate('/additional-notes')
+  }
+
+  const advanceDynamic = async (answer: string) => {
+    if (!symptoms) return
+    setLoadingNext(true)
+    setQuestionError(null)
+    try {
+      dispatch(setDynamicAnswer({ index: currentIdx, answer }))
+
+      const nextAnswers = [...savedDynamic]
+      while (nextAnswers.length <= currentIdx) {
+        nextAnswers.push('')
+      }
+      nextAnswers[currentIdx] = answer
+      const history = buildHistory(nextAnswers)
+
+      const next = await fetchNextQuestion(symptoms, history, additionalNotes)
+      if (next.done) {
+        setDoneAsking(true)
+        await runFinalAnalysisAndProceed(history)
+        return
+      }
+      if (next.question) {
+        dispatch(setAiQuestions([...aiQuestions, next.question]))
+        setCurrentIdx((i) => i + 1)
+        setDynAnswer('')
+        return
+      }
+      setQuestionError(t('symptoms.questionGenFailed') || 'Could not generate the next question.')
+    } catch {
+      setQuestionError(t('symptoms.questionGenFailed') || 'Could not generate the next question.')
+      showToast(t('symptoms.questionGenFailed') || 'Could not generate the next question.')
+    } finally {
+      setLoadingNext(false)
+    }
+  }
+
+  const retryFirstQuestion = async () => {
+    if (!symptoms) return
+    setLoadingNext(true)
+    setQuestionError(null)
+    try {
+      const first = await fetchNextQuestion(symptoms, [])
+      if (first.done === false && first.question) {
+        dispatch(setAiQuestions([first.question]))
+        setCurrentIdx(0)
+        setDynAnswer('')
+        setDoneAsking(false)
+        return
+      }
+      setQuestionError(t('symptoms.questionGenFailed') || 'Could not generate follow-up questions.')
+    } catch {
+      setQuestionError(t('symptoms.questionGenFailed') || 'Could not generate follow-up questions.')
+    } finally {
+      setLoadingNext(false)
+    }
+  }
 
   const handleNext = () => {
     if (!canNext) return
     if (hasDynamic) {
-      dispatch(setDynamicAnswer({ index: 0, answer: dynA0 }))
-      dispatch(setDynamicAnswer({ index: 1, answer: dynA1 }))
-    } else {
-      dispatch(setSymptomQuestionData({ hasFever, temperature }))
+      if (doneAsking) {
+        dispatch(syncDynamicQaToAnswers())
+        navigate('/additional-notes')
+        return
+      }
+      void advanceDynamic(dynAnswer)
+      return
     }
+    dispatch(setSymptomQuestionData({ hasFever, temperature }))
     navigate('/more-questions')
   }
 
+  if (isEmergency) {
+    return (
+      <Layout>
+        <div className="page-padding space-y-6 bg-background">
+          <Header title={t('aiQuestions.title')} onBack={() => navigate('/symptoms')} />
+          <div className="card space-y-3 border-danger/30 bg-danger/5 p-5">
+            <p className="text-sm font-semibold text-danger">{t('symptoms.emergencyTitle') || 'Possible emergency'}</p>
+            <p className="text-sm text-foreground">{emergencyMessage || t('symptoms.emergencyBody')}</p>
+          </div>
+          <button type="button" className="btn-primary" onClick={() => navigate('/home')}>
+            {t('common.ok') || 'OK'}
+          </button>
+        </div>
+      </Layout>
+    )
+  }
+
+  if (symptoms && !hasDynamic) {
+    return (
+      <Layout>
+        <div className="page-padding space-y-6 bg-background">
+          <Header title={t('aiQuestions.title')} onBack={() => navigate('/symptoms')} />
+          <div className="card space-y-4 p-5">
+            <p className="text-sm text-muted">
+              {questionError || t('symptoms.questionGenFailed') || 'Could not generate follow-up questions.'}
+            </p>
+            <button type="button" className="btn-primary" disabled={loadingNext} onClick={() => void retryFirstQuestion()}>
+              {loadingNext ? (t('symptoms.analyzing') || 'Loading...') : (t('common.retry') || 'Retry')}
+            </button>
+          </div>
+        </div>
+      </Layout>
+    )
+  }
+
   if (hasDynamic) {
+    const q = aiQuestions[currentIdx]
     return (
       <Layout>
         <div className="page-padding space-y-6 bg-background">
           <Header title={t('aiQuestions.title')} onBack={() => navigate('/symptoms')} />
           <div className="space-y-6">
-            <section className="card space-y-4 p-5">
-              <h2 className="text-base font-semibold text-foreground">{aiQuestions[0].question}</h2>
+            <section ref={dynSectionRef} className="card space-y-4 p-5">
+              <h2 className="text-base font-semibold text-foreground">{q?.question}</h2>
               <div className="flex flex-wrap gap-2">
-                {aiQuestions[0].options.map((opt) => (
+                {q?.options?.map((opt) => (
                   <AnswerChip
                     key={opt}
                     label={opt}
-                    selected={dynA0 === opt}
-                    onPress={() => { setDynA0(opt); setDynA1('') }}
+                    selected={dynAnswer === opt}
+                    onPress={() => setDynAnswer(opt)}
                   />
                 ))}
               </div>
+              {questionError ? <p className="text-sm text-danger">{questionError}</p> : null}
             </section>
-            {dynShowQ2 ? (
-              <section ref={dynSectionBRef} className="card animate-section-reveal space-y-4 p-5">
-                <h2 className="text-base font-semibold text-foreground">{aiQuestions[1].question}</h2>
-                <div className="flex flex-wrap gap-2">
-                  {aiQuestions[1].options.map((opt) => (
-                    <AnswerChip
-                      key={opt}
-                      label={opt}
-                      selected={dynA1 === opt}
-                      onPress={() => setDynA1(opt)}
-                    />
-                  ))}
-                </div>
-              </section>
-            ) : null}
           </div>
           <div className="grid grid-cols-2 gap-3 pt-2">
             <button type="button" className="btn-secondary" onClick={() => navigate('/symptoms')}>{t('common.back')}</button>
-            <button type="button" className="btn-primary" disabled={!canNext} onClick={handleNext}>{t('common.next')}</button>
+            <button type="button" className="btn-primary" disabled={!canNext || loadingNext} onClick={handleNext}>
+              {loadingNext ? (t('symptoms.analyzing') || 'Loading...') : t('common.next')}
+            </button>
           </div>
         </div>
       </Layout>
@@ -1259,7 +1417,7 @@ export const MoreQuestionsPage = () => {
   const saved = useAppSelector((state) => state.consultation.symptomData)
   const aiQuestions = useAppSelector((state) => state.consultation.aiQuestions)
   const savedDynamic = useAppSelector((state) => state.consultation.dynamicAnswers)
-  const hasDynamic = aiQuestions.length >= 4
+  const hasDynamic = aiQuestions.length >= 1
 
   // Hardcoded fallback state
   const [feverDuration, setFeverDuration] = useState<FeverDuration | null>(() => saved.feverDuration)
@@ -1305,8 +1463,9 @@ export const MoreQuestionsPage = () => {
   const handleNext = () => {
     if (!canNext) return
     if (hasDynamic) {
-      dispatch(setDynamicAnswer({ index: 2, answer: dynA2 }))
-      dispatch(setDynamicAnswer({ index: 3, answer: dynA3 }))
+      // Dynamic flow now lives in AiQuestionsPage (unlimited, one-at-a-time).
+      navigate('/ai-questions')
+      return
     } else {
       dispatch(setSymptomQuestionData({ feverDuration, hasChills, moreQuestionsVoiceNotes: '' }))
     }
@@ -1314,47 +1473,8 @@ export const MoreQuestionsPage = () => {
   }
 
   if (hasDynamic) {
-    return (
-      <Layout>
-        <div className="page-padding space-y-6 bg-background">
-          <Header title={t('moreQuestions.title')} onBack={() => navigate('/ai-questions')} />
-          <div className="space-y-6">
-            <section className="card space-y-4 p-5">
-              <h2 className="text-base font-semibold text-foreground">{aiQuestions[2].question}</h2>
-              <div className="flex flex-wrap gap-2">
-                {aiQuestions[2].options.map((opt) => (
-                  <AnswerChip
-                    key={opt}
-                    label={opt}
-                    selected={dynA2 === opt}
-                    onPress={() => { setDynA2(opt); setDynA3('') }}
-                  />
-                ))}
-              </div>
-            </section>
-            {dynShowQ4 ? (
-              <section ref={dynSectionBRef} className="card animate-section-reveal space-y-4 p-5">
-                <h2 className="text-base font-semibold text-foreground">{aiQuestions[3].question}</h2>
-                <div className="flex flex-wrap gap-2">
-                  {aiQuestions[3].options.map((opt) => (
-                    <AnswerChip
-                      key={opt}
-                      label={opt}
-                      selected={dynA3 === opt}
-                      onPress={() => setDynA3(opt)}
-                    />
-                  ))}
-                </div>
-              </section>
-            ) : null}
-          </div>
-          <div className="grid grid-cols-2 gap-3 pt-2">
-            <button type="button" className="btn-secondary" onClick={() => navigate('/ai-questions')}>{t('common.back')}</button>
-            <button type="button" className="btn-primary" disabled={!canNext} onClick={handleNext}>{t('common.next')}</button>
-          </div>
-        </div>
-      </Layout>
-    )
+    // Dynamic flow is handled in AiQuestionsPage now.
+    return <Navigate to="/ai-questions" replace />
   }
 
   return (
@@ -1558,12 +1678,32 @@ export const SummaryPage = () => {
   const [loading, setLoading] = useState(false)
   const [selectedDoctor, setSelectedDoctor] = useState<MatchedDoctor | null>(null)
   const [showSelectHint, setShowSelectHint] = useState(false)
-  const { symptomData, currentSymptoms, consultationId, additionalNotes, disease, confidence, aiSpecialization } = consultation
+  const {
+    symptomData,
+    currentSymptoms,
+    consultationId,
+    additionalNotes,
+    disease,
+    confidence,
+    aiSpecialization,
+    aiQuestions,
+    dynamicAnswers,
+    aiAnswers,
+  } = consultation
 
   const symptomsText = currentSymptoms || ''
 
   const summaryBullets = useMemo(() => {
     const lines: string[] = []
+    if (symptomsText.trim()) {
+      lines.push(`${t('summary.labels.symptoms') || 'Symptoms'}: ${symptomsText.trim()}`)
+    }
+    aiQuestions.forEach((q, index) => {
+      const answer = dynamicAnswers[index] ?? aiAnswers[q.question]
+      if (q.question && answer) {
+        lines.push(`${q.question}: ${answer}`)
+      }
+    })
     if (symptomData.hasFever) {
       lines.push(`${t('summary.labels.fever')}: ${feverAnswerLabel(symptomData.hasFever, t)}`)
     }
@@ -1582,11 +1722,8 @@ export const SummaryPage = () => {
     if (additionalNotes.trim()) {
       lines.push(`${t('summary.labels.additionalNotes')}: ${additionalNotes.trim()}`)
     }
-    if (!lines.length && symptomsText) {
-      return symptomsText.split(/[.,\n]/).map((item) => item.trim()).filter(Boolean)
-    }
-    return lines
-  }, [additionalNotes, symptomData, symptomsText, t])
+    return lines.length ? lines : symptomsText.split(/[.,\n]/).map((item) => item.trim()).filter(Boolean)
+  }, [additionalNotes, aiAnswers, aiQuestions, dynamicAnswers, symptomData, symptomsText, t])
 
   const [doctors, setDoctors] = useState<MatchedDoctor[]>([])
   const [doctorsLoading, setDoctorsLoading] = useState(false)
@@ -1623,16 +1760,23 @@ export const SummaryPage = () => {
       })
   }, [recommendedSpecialization])
 
-  const aiAnswers = useMemo(
-    () => ({
+  const submitAiAnswers = useMemo(() => {
+    const fromDynamic: Record<string, string> = {}
+    aiQuestions.forEach((q, index) => {
+      const answer = dynamicAnswers[index] ?? aiAnswers[q.question]
+      if (q.question && answer) {
+        fromDynamic[q.question] = answer
+      }
+    })
+    return {
+      ...fromDynamic,
       hasFever: symptomData.hasFever ?? '',
       temperature: symptomData.temperature ?? '',
       feverDuration: symptomData.feverDuration ?? '',
       hasChills: symptomData.hasChills ?? '',
       moreQuestionsVoiceNotes: symptomData.moreQuestionsVoiceNotes ?? '',
-    }),
-    [symptomData],
-  )
+    }
+  }, [aiAnswers, aiQuestions, dynamicAnswers, symptomData])
 
   return (
     <Layout>
@@ -1741,7 +1885,7 @@ export const SummaryPage = () => {
                 consultationId,
                 symptoms: symptomsText || summaryBullets.join(', '),
                 additionalNotes,
-                aiAnswers,
+                aiAnswers: submitAiAnswers,
                 riskLevel: consultation.riskLevel ?? flowRisk,
                 doctorId: selectedDoctor.id,
                 recommendedSpecialization: aiSpecialization || recommendedSpecialization,
