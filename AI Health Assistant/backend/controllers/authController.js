@@ -26,6 +26,8 @@ const findByEmail = async (email, role) => {
     : prisma.patient.findFirst({ where: { email: normalized } })
 }
 
+
+
 const phoneModel = (role) => (role === 'doctor' ? prisma.doctor : prisma.patient)
 
 /** Find user by phone; migrates legacy 10-digit storage to +91. */
