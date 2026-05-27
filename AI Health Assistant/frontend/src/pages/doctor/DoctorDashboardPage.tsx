@@ -325,7 +325,7 @@ const DoctorDashboardPage = () => {
                     className="w-full bg-gradient-to-r from-primary/5 to-primary/10 py-2.5 text-sm font-semibold text-primary transition-all hover:from-primary/10 hover:to-primary/15 active:scale-[0.98]"
                     onClick={() => navigate(`/doctor-consultation/${item.id}`)}
                   >
-                    {t('doctorDashboard.view')} →
+                    {t('doctorDashboard.view')}
                   </button>
                 </div>
               </div>

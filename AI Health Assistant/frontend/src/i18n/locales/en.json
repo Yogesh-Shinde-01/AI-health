@@ -218,7 +218,7 @@
     "fullNamePh": "e.g. Ravi Kadam",
     "mobile": "Mobile Number",
     "mobilePh": "e.g. +91 98765 43210",
-    "email": "Email Address (optional)",
+    "email": "Email Address ",
     "emailPh": "e.g. john@gmail.com",
     "dob": "Date of Birth",
     "dobPh": "DD-MM-YYYY",
@@ -342,7 +342,12 @@
     "title": "Describe Your Symptoms",
     "typeLabel": "Describe Your Symptoms",
     "typePlaceholder": "Describe your symptoms here...\ne.g. I have had fever for 2 days, body pain, and headache.",
-    "chars": "{{count}} / {{max}} characters"
+    "chars": "{{count}} / {{max}} characters",
+    "analyzing": "Analyzing...",
+    "analyzeFailed": "Symptom analysis failed. Please try again.",
+    "questionGenFailed": "Could not generate follow-up questions. Please try again.",
+    "emergencyTitle": "Possible emergency",
+    "emergencyBody": "Seek immediate medical care. Follow-up questions were skipped."
   },
   "aiQuestions": {
     "title": "AI Asking Questions",
@@ -408,6 +413,7 @@
     "submitToDoctor": "Submit to Doctor ",
     "mockSymptoms": ["Fever (2 days)", "Body Pain", "Headache", "Chills", "No Cough"],
     "labels": {
+      "symptoms": "Symptoms",
       "fever": "Fever",
       "temperature": "Body temperature",
       "feverDuration": "Fever duration",
@@ -421,7 +427,7 @@
     "subtitle": "{{doctorName}} has been notified.",
     "pendingReview": "Pending Review",
     "infoBody": "You will be notified once the doctor reviews your case and creates a prescription.",
-    "trackStatus": "Track Status →",
+    "trackStatus": "Track Status ",
     "goHome": "Go to Home"
   },
   "doctorLogin": {
@@ -738,6 +744,8 @@
     "next": "Continue ",
     "back": "Back",
     "skip": "Skip",
+    "retry": "Retry",
+    "ok": "OK",
     "submit": "Submit",
     "loading": "Loading...",
     "yes": "Yes",

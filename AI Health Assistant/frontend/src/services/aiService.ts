@@ -43,3 +43,26 @@ export const runFinalAnalysis = async (
   )
   return response.data.data
 }
+
+export interface AiQaPair {
+  question: string
+  answer: string
+}
+
+export interface NextQuestionResult {
+  done: boolean
+  question?: AiQuestion
+  rationale?: string
+}
+
+export const fetchNextQuestion = async (
+  symptoms: string,
+  history: AiQaPair[],
+  additionalNotes?: string,
+): Promise<NextQuestionResult> => {
+  const response = await client.post<{ success: boolean; data: NextQuestionResult }>(
+    '/ai/next-question',
+    { symptoms, history, additionalNotes },
+  )
+  return response.data.data
+}

@@ -8,6 +8,16 @@ import { omitPassword, toAuthUser } from '../utils/userDto.js'
 
 const success = (message, extra = {}) => ({ success: true, message, ...extra })
 
+const toStringArray = (value) => {
+  if (Array.isArray(value)) {
+    return value.map((item) => String(item).trim()).filter(Boolean)
+  }
+  if (typeof value === 'string' && value.trim()) {
+    return value.split(',').map((item) => item.trim()).filter(Boolean)
+  }
+  return []
+}
+
 const findByEmail = async (email, role) => {
   const normalized = email?.trim().toLowerCase()
   if (!normalized) return null
@@ -89,7 +99,7 @@ const registerAccount = async ({
 }
 
 export const registerPatient = async (req, res) => {
-  const { fullName, phone, email, password } = req.body
+  const { fullName, phone, email, password, chronicDiseases, allergies, currentMedicines } = req.body
   if (!fullName?.trim() || !phone || !password) {
     throw new ApiError(400, 'fullName, phone and password are required', 'VALIDATION')
   }
@@ -104,9 +114,9 @@ export const registerPatient = async (req, res) => {
       fullName: fullName.trim(),
       email: email?.trim().toLowerCase() || null,
       password,
-      chronicDiseases: [],
-      allergies: [],
-      currentMedicines: [],
+      chronicDiseases: toStringArray(chronicDiseases),
+      allergies: toStringArray(allergies),
+      currentMedicines: toStringArray(currentMedicines),
       isVerified: false,
     },
     res,

@@ -118,6 +118,18 @@ const consultationSlice = createSlice({
         state.dynamicAnswers.push('')
       }
       state.dynamicAnswers[index] = answer
+      const question = state.aiQuestions[index]?.question
+      if (question && answer) {
+        state.aiAnswers[question] = answer
+      }
+    },
+    syncDynamicQaToAnswers: (state) => {
+      state.aiQuestions.forEach((q, index) => {
+        const answer = state.dynamicAnswers[index]
+        if (q.question && answer) {
+          state.aiAnswers[q.question] = answer
+        }
+      })
     },
     hydrateFromConsultation: (state, action: PayloadAction<Consultation>) => {
       state.currentSymptoms = action.payload.symptoms
@@ -165,6 +177,7 @@ export const {
   setConsultationId,
   setCurrentQuestionIndex,
   setDynamicAnswer,
+  syncDynamicQaToAnswers,
   setNotes,
   setRiskLevel,
   setSymptomQuestionData,

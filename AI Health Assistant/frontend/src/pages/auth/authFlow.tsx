@@ -728,6 +728,9 @@ export const PatientRegistrationPage = () => {
         phone,
         email: draft.email,
         password,
+        chronicDiseases: saved.chronicDiseases,
+        allergies: saved.allergies,
+        currentMedicines: saved.currentMedicines,
       })
       setPatientAwaitingOtp(true)
       navigate('/otp', { replace: true })

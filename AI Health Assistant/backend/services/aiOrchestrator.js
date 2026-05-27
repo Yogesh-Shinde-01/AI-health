@@ -6,7 +6,7 @@
 
 import { detectEmergency } from './emergencyService.js'
 import { findSymptomMatch } from './datasetService.js'
-import { analyzeWithGroq, finalAnalysisWithGroq } from './groqService.js'
+import { analyzeWithGroq, finalAnalysisWithGroq, nextQuestionWithGroq } from './groqService.js'
 
 /**
  * Normalizes riskLevel strings to a consistent format.
@@ -66,7 +66,9 @@ export const analyzeSymptoms = async (symptoms) => {
       specialization: datasetResult.specialization,
       riskLevel: normalizeRisk(datasetResult.riskLevel),
       confidence: datasetResult.confidence,
-      questions: datasetResult.questions,
+      // IMPORTANT: follow-up questions must be generated dynamically per-answer.
+      // We intentionally do not return dataset questions here.
+      questions: [],
       advice: datasetResult.advice,
       source: 'dataset',
     }
@@ -79,6 +81,7 @@ export const analyzeSymptoms = async (symptoms) => {
       return {
         isEmergency: false,
         ...groqResult,
+        questions: [],
         riskLevel: normalizeRisk(groqResult.riskLevel),
         source: 'groq',
       }
@@ -100,6 +103,31 @@ export const analyzeSymptoms = async (symptoms) => {
     advice: 'Please consult a doctor for proper evaluation.',
     source: 'none',
   }
+}
+
+/**
+ * Step 1b: Generate the next follow-up question (one at a time).
+ * Requirements:
+ * - No hardcoded/template questions
+ * - Must be generated only from symptoms + prior Q/A
+ * - Must not repeat earlier questions
+ * - No fixed question limit (caller keeps requesting until done:true)
+ *
+ * @param {string} symptoms
+ * @param {Array<{question: string, answer: string}>} history
+ * @param {string} additionalNotes
+ * @returns {Promise<{done: boolean, question?: {question: string, options: string[]}, rationale?: string}>}
+ */
+export const nextFollowUpQuestion = async (symptoms, history = [], additionalNotes = '') => {
+  const emergency = detectEmergency(symptoms)
+  if (emergency.isEmergency) {
+    return { done: true, rationale: 'Emergency detected; stop follow-up questions.' }
+  }
+
+  if (!process.env.GROQ_API_KEY) {
+    throw new Error('Dynamic follow-up questioning requires GROQ_API_KEY configuration.')
+  }
+  return await nextQuestionWithGroq(symptoms, history, additionalNotes)
 }
 
 /**
